@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Board from './screens/Board'
+import Boards from './screens/Boards'
+import Signup from './screens/Signup'
+import User from './screens/User'
+import Login from './screens/Login'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="login" element={<Login />} />
+                <Route path="Boards" element={<Boards />} />
+                <Route path="signup" element={<Signup />} />
+                <Route path="board/:id" element={<Board />} />
+                <Route path="user/:id" element={<User />} />
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
-export default App;
+export default App
