@@ -1,12 +1,21 @@
 import React from 'react';
 
-import { Grid, Typography, TextField, Button, Link } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  TextField,
+  Button,
+  useMediaQuery,
+  useTheme,
+  Hidden,
+} from '@mui/material';
 
 import { makeStyles } from '@mui/styles';
 import rigtPic from '../../src/assets/right.svg';
 import lefPic from '../../src/assets/left.svg';
+import { Theme } from '@mui/system';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
     backgroundColor: '#F9FAFC',
     height: '60em',
@@ -14,26 +23,36 @@ const useStyles = makeStyles({
   logo: {
     width: '14em',
     marginTop: '2em',
-    marginBottom: '2rem',
+    marginBottom: '2em',
   },
   loginBox: {
     background: 'hsl(0deg 0% 100%)',
     boxShadow: 'rgb(0 0 0 / 10%) 0 0 10px',
     padding: '25px 40px',
-    width: '25rem',
+    width: '25em',
   },
   leftPic: {
-    width: '25em',
-    height: '30em',
+    width: '35%',
+    height: '50%',
     bottom: 0,
     position: 'fixed',
+    marginRight: '-10px',
+    [theme.breakpoints.down('md')]: {
+      width: '20%',
+      height: '15',
+    },
   },
   rightPic: {
-    width: '25em',
-    height: '30em',
+    width: '35%',
+    height: '50%',
     bottom: 0,
     right: 0,
     position: 'fixed',
+    marginLeft: '-10px',
+    [theme.breakpoints.down('md')]: {
+      width: '20%',
+      height: '15',
+    },
   },
   passwordInput: {
     width: '20em',
@@ -54,24 +73,29 @@ const useStyles = makeStyles({
     fontSize: '16px',
     fontWeight: 'bold',
   },
-});
+}));
 const Login = () => {
   const classes = useStyles();
+  const theme = useTheme();
+  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Grid
       container
       className={classes.loginPage}
-      justifyContent='space-between'
+      justifyContent={matchesSM ? ' center' : 'space-between'}
     >
-      <Grid item>
-        <Grid item container>
-          <Grid item sx={{}}>
-            {/** Left pic */}
+      <Hidden smDown>
+        <Grid item>
+          <Grid item container>
+            <Grid item sx={{}}>
+              {/** Left pic */}
 
-            <img src={lefPic} alt='left-pic' className={classes.leftPic} />
+              <img src={lefPic} alt='left-pic' className={classes.leftPic} />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Hidden>
+
       <Grid item>
         <Grid item container direction='column' alignItems='center'>
           <Grid item>
@@ -201,14 +225,16 @@ const Login = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
-        <Grid item container>
-          <Grid item>
-            {/** right pic */}
-            <img src={rigtPic} alt='right-pic' className={classes.rightPic} />
+      <Hidden smDown>
+        <Grid item>
+          <Grid item container>
+            <Grid item>
+              {/** right pic */}
+              <img src={rigtPic} alt='right-pic' className={classes.rightPic} />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Hidden>
     </Grid>
   );
 };
