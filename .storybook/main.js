@@ -4,10 +4,8 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/preset-create-react-app',
+    '@storybook/addon-postcss',
   ],
+  managerEntries: ['@storybook/addon-postcss'],
   framework: '@storybook/react',
-  core: {
-    builder: 'webpack5',
-  },
 };
