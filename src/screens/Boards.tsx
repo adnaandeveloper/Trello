@@ -1,7 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Header from '../components/ui/Header';
 
 const Boards = () => {
-    return <div>Boards her </div>
-}
+  return (
+    <div>
+      <Header />
+      Boards her
+    </div>
+  );
+};
 
-export default Boards
+export default Boards;
