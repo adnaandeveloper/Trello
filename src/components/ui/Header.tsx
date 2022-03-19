@@ -88,8 +88,8 @@ const Header = () => {
   };
 
   return (
-    <AppBar position='static' className={classes.appBar}>
-      <Toolbar variant='dense'>
+    <AppBar className={classes.appBar}>
+      <Toolbar variant='dense' disableGutters>
         <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item>
             <Grid item container alignItems='center' spacing={1}>
