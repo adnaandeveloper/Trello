@@ -61,9 +61,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 const Header = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
-  const matchesMD = useMediaQuery(theme.breakpoints.down('md'));
   const matchesTablet = useMediaQuery(theme.breakpoints.down(1059));
   const matchesTabletM = useMediaQuery(theme.breakpoints.down(1018));
   const matchesTabletMM = useMediaQuery(theme.breakpoints.down(1017));
