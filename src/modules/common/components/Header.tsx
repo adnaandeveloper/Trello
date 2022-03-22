@@ -1,20 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  useMediaQuery,
-  useTheme,
-  IconButton,
-  Button,
-} from '@mui/material/';
+import { AppBar, Toolbar, Grid, Button } from '@mui/material/';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import AddIcon from '@mui/icons-material/Add';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
-import { Avatar } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
 import HeaderInput from './HeaderInput';
 import TrelloLogo from './TrelloLogo';
@@ -80,6 +70,9 @@ const menuListRigt = [
   {
     content: 'Templates',
   },
+  {
+    content: <CreateButton />,
+  },
 ];
 
 const menuListLeft = [
@@ -96,21 +89,13 @@ const menuListLeft = [
 
 const Header = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const matchesLG = useMediaQuery(theme.breakpoints.down('lg'));
-  const matchesTablet = useMediaQuery(theme.breakpoints.down(1059));
-  const matchesTabletM = useMediaQuery(theme.breakpoints.down(1018));
-  const matchesTabletMM = useMediaQuery(theme.breakpoints.down(1017));
-  const matchesTabletMMX = useMediaQuery(theme.breakpoints.down(808));
-  const matchesTabletMMXX = useMediaQuery(theme.breakpoints.down(751));
-
   return (
     <AppBar className={classes.appBar}>
       <Toolbar variant='dense' disableGutters>
         <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item>
             <Grid item container alignItems='center' spacing={1}>
-              {menuListRigt.map((content) => (
+              {menuListRigt.map((content, index) => (
                 <Grid item>
                   <Button
                     sx={{
@@ -126,10 +111,6 @@ const Header = () => {
                   </Button>
                 </Grid>
               ))}
-              <Grid item>
-                {' '}
-                <CreateButton />{' '}
-              </Grid>
             </Grid>
           </Grid>
 
@@ -160,7 +141,6 @@ const Header = () => {
                       },
                     }}
                   >
-                    {' '}
                     {item.content}
                   </Button>
                 </Grid>

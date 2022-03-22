@@ -12,7 +12,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
-import { AnyRecord } from 'dns';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchInput: {
@@ -44,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 const HeaderInput = () => {
   const classes = useStyles();
   const theme = useTheme();
-
   const matchesTabletMM = useMediaQuery(theme.breakpoints.down(1017));
   const [focus, setFocus] = useState(false);
   const [mouseOver, setMouseOver] = useState(false);
@@ -105,7 +103,6 @@ const HeaderInput = () => {
                           sx={{
                             color: focus ? 'black' : 'white',
                             fontSize: 14,
-
                             marginRight: '-6px',
                             marginTop: '-5px',
                           }}

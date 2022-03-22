@@ -94,7 +94,6 @@ const BoardsRightMenu = () => {
                 color: menuItem.color,
               }}
               primary={menuItem.text}
-              //backgroundColor:
             />
           </ListItemButton>
         </Grid>

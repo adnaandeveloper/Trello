@@ -3,9 +3,6 @@ import Header from './../../common/components/Header';
 import {
   Container,
   Grid,
-  ListItemButton,
-  ListItemText,
-  ListItemIcon,
   Typography,
   Link,
   Button,
@@ -15,14 +12,11 @@ import {
 } from '@mui/material/';
 import { makeStyles } from '@mui/styles';
 import { Theme } from '@mui/system';
-
-import AddIcon from '@mui/icons-material/Add';
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import BackupTableIcon from '@mui/icons-material/BackupTable';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import BoardCard from 'modules/common/components/BoardCard';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BoardsRightMenu from './BoardsRightMenu';
+import CloseButton from 'modules/common/components/CloseButton';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftBox: {
@@ -49,10 +43,32 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
+const textUnderPersonalBoards = [
+  {
+    marginLeft: '10px',
+    color: '#5e6c84',
+    fonstSize: '16px',
+    fontWeigth: '700',
+    marginBottom: '30px',
+    text: 'YOUR WORKSPACES',
+  },
+  {
+    marginLeft: '10px',
+    color: '#5e6c84',
+    fonstSize: '14px',
+    fontWeigth: '400',
+    marginBottom: '30px',
+    text: 'anothe text is writen manually',
+  },
+];
+
 const Boards = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const title = 'Most popular templates';
+  const underTitleText =
+    'Get going faster with a template from the Trello community or';
 
   return (
     <div>
@@ -83,20 +99,12 @@ const Boards = () => {
                     fontWeight: 'bold',
                   }}
                 >
-                  Most popular templates
+                  {title}
                 </Typography>
               </Grid>
               <Grid item xs={1} md={1}>
                 <Grid item container className={classes.boardrightClose}>
-                  <Grid item>
-                    <Button
-                      sx={{
-                        backgroundColor: '#f4f5f7',
-                      }}
-                    >
-                      <AddIcon />
-                    </Button>
-                  </Grid>
+                  <CloseButton />
                 </Grid>
               </Grid>
             </Grid>
@@ -109,7 +117,7 @@ const Boards = () => {
                 marginLeft: '10px',
               }}
             >
-              Get going faster with a template from the Trello community or
+              {underTitleText}
             </Grid>
 
             <Grid item xs={12} md={12}>
@@ -120,27 +128,13 @@ const Boards = () => {
                 spacing={1}
                 sx={{ marginBottom: '10px' }}
               >
-                <Grid item>
-                  <Button>
-                    <BoardCard />
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button>
-                    <BoardCard />
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button>
-                    <BoardCard />
-                  </Button>
-                </Grid>
-
-                <Grid item>
-                  <Button>
-                    <BoardCard />
-                  </Button>
-                </Grid>
+                {['red', 'blue', 'orange', 'black'].map((color) => (
+                  <Grid item>
+                    <Button>
+                      <BoardCard color={color} />
+                    </Button>
+                  </Grid>
+                ))}
               </Grid>
               <Grid item sx={{ marginBottom: '50px', marginLeft: '10px' }}>
                 <Link href='#'>
@@ -170,7 +164,7 @@ const Boards = () => {
 
               <Grid item sx={{ marginBottom: '40px' }}>
                 <Button>
-                  <BoardCard />
+                  <BoardCard color='red' />
                 </Button>
               </Grid>
 
@@ -193,42 +187,51 @@ const Boards = () => {
               </Grid>
 
               <Grid item sx={{ marginBottom: '40px' }}>
-                <Button>
-                  <BoardCard />
-                </Button>
-                <Button>
-                  <BoardCard />
-                </Button>
+                {['red', 'orange'].map((color) => (
+                  <Button>
+                    <BoardCard color={color} />
+                  </Button>
+                ))}
               </Grid>
 
+              {textUnderPersonalBoards.map((title, index) => (
+                <Grid item sx={{ marginLeft: title.marginLeft }}>
+                  <Typography
+                    sx={{
+                      color: title.color,
+                      fonstSize: title.fonstSize,
+                      fontWeigth: title.fontWeigth,
+                      marginBottom: title.marginBottom,
+                    }}
+                  >
+                    {index === 1 ? (
+                      <h5>
+                        You aren't a member of any workspaces yet.
+                        <Link href='#' style={{ color: 'inherit' }}>
+                          {' '}
+                          Create a workspace{' '}
+                        </Link>
+                      </h5>
+                    ) : (
+                      title.text
+                    )}
+                  </Typography>
+                </Grid>
+              ))}
+
               <Grid item sx={{ marginLeft: '10px' }}>
-                <Typography
+                <Button
                   sx={{
-                    color: '#5e6c84',
-                    fonstSize: '16px',
-                    fontWeigth: '700',
-                    marginBottom: '30px',
+                    color: 'black',
+                    textTransform: 'none',
+                    backgroundColor: '#f1f2f4',
+                    '&:hover': {
+                      backgroundColor: '#e6e9ed',
+                    },
                   }}
                 >
-                  YOUR WORKSPACES
-                </Typography>
-              </Grid>
-              <Grid item sx={{ marginLeft: '10px' }}>
-                <Typography
-                  sx={{
-                    color: '#5e6c84',
-                    fonstSize: '14px',
-                    fontWeigth: '400',
-                    marginBottom: '30px',
-                  }}
-                >
-                  {' '}
-                  You aren't a member of any workspaces yet.{' '}
-                  <Link href='#'> Create a workspace </Link>
-                </Typography>
-              </Grid>
-              <Grid item sx={{ marginLeft: '10px' }}>
-                <Button>View all closed boards</Button>
+                  View all closed boards
+                </Button>
               </Grid>
             </Grid>
           </Grid>

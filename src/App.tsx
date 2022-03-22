@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Board from './modules/dashboard/components/Board';
 import Boards from './modules/dashboards/components/Boards';
-import Signup from './modules/signup/components/Signup';
+import Signup from 'modules/signup/components/Signup';
 import User from './modules/user/components/User';
 import Login from './modules/login/components/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -30,6 +30,7 @@ const theme = createTheme({
           // Some CSS
           fontSize: '1rem',
           color: 'white',
+          borderRadius: 0,
         },
       },
     },

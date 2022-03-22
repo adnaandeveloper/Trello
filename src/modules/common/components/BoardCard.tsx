@@ -4,14 +4,18 @@ import Button from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material/';
 
-const BoardCard = () => {
+interface Props {
+  color: string;
+}
+
+const BoardCard: React.FC<Props> = ({ color }) => {
   return (
     <div>
       <Card
         sx={{
           width: '12rem ',
           height: '96px',
-          backgroundColor: 'hsla(312,48%,42%,1);',
+          backgroundColor: color,
         }}
       >
         <CardContent>
