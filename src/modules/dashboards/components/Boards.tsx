@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../components/ui/Header';
+import Header from './../../common/components/Header';
 import {
   Container,
   Grid,
@@ -20,8 +20,9 @@ import AddIcon from '@mui/icons-material/Add';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import BoardCard from '../components/ui/BoardCard';
+import BoardCard from 'modules/common/components/BoardCard';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import BoardsRightMenu from './BoardsRightMenu';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftBox: {
@@ -63,96 +64,7 @@ const Boards = () => {
         >
           <Hidden mdDown>
             <Grid item xs={2} md={2}>
-              <Grid
-                item
-                container
-                direction='column'
-                alignItems='flex-start'
-                className={classes.leftBox}
-                position='fixed'
-              >
-                <Grid
-                  item
-                  className={classes.leftBoxItem}
-                  style={{ backgroundColor: '#E4F0F6' }}
-                >
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <AssessmentIcon />
-                    </ListItemIcon>
-
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '14px',
-                        color: '#0079BF',
-                        fontWeight: 'bold',
-                      }}
-                      primary='Boards'
-                    />
-                  </ListItemButton>
-                </Grid>
-                <Grid item className={classes.leftBoxItem}>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <BackupTableIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '14px',
-                        color: '#172B4D',
-                        fontWeight: 'bold',
-                      }}
-                      primary='Templates'
-                    />
-                  </ListItemButton>
-                </Grid>
-                <Grid item className={classes.leftBoxItem}>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <TrendingDownIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '14px',
-                        color: '#172B4D',
-                        fontWeight: 'bold',
-                      }}
-                      primary='Home'
-                    />
-                  </ListItemButton>
-                </Grid>
-                <Grid
-                  item
-                  className={classes.leftBoxItem}
-                  sx={{ marginLeft: '24px' }}
-                >
-                  <ListItemButton disabled>
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '12px',
-                        color: '#172B4D',
-                        fontWeight: 'bold',
-                      }}
-                      primary='Workspaces'
-                    />
-                  </ListItemButton>
-                </Grid>
-
-                <Grid item className={classes.leftBoxItem}>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <AddIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primaryTypographyProps={{
-                        fontSize: '14px',
-                        color: '#091E42A8',
-                      }}
-                      primary='Create a Workspace'
-                    />
-                  </ListItemButton>
-                </Grid>
-              </Grid>
+              <BoardsRightMenu />
             </Grid>
           </Hidden>
           <Grid item xs={9} md={9} sx={{ marginLeft: '44px' }}>

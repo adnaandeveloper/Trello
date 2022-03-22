@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Board from './screens/Board';
-import Boards from './screens/Boards';
-import Signup from './screens/Signup';
-import User from './screens/User';
-import Login from './screens/Login';
+import Board from './modules/dashboard/components/Board';
+import Boards from './modules/dashboards/components/Boards';
+import Signup from './modules/signup/components/Signup';
+import User from './modules/user/components/User';
+import Login from './modules/login/components/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 declare module '@mui/material/styles/' {
@@ -29,6 +29,13 @@ const theme = createTheme({
         root: {
           // Some CSS
           fontSize: '1rem',
+          color: 'white',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
           color: 'white',
         },
       },

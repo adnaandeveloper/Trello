@@ -13,8 +13,8 @@ import {
 } from '@mui/material';
 
 import { makeStyles } from '@mui/styles';
-import rigtPic from '../../src/assets/right.svg';
-import lefPic from '../../src/assets/left.svg';
+import rigtPic from './../../../assets/right.svg';
+import lefPic from './../../../assets/left.svg';
 import { Theme } from '@mui/system';
 
 const useStyles = makeStyles((theme: Theme) => ({
