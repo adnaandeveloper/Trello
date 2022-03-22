@@ -23,18 +23,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     verticalAlign: 'middle',
     display: 'inline-flex',
   },
-  boardsCenterText: {
-    marginTop: '100px !important',
-  },
-  boardsCenterTextHeader: {
-    verticalAlign: 'middle',
-    display: 'inline-flex',
-    marginTop: '120px !important',
-    marginBottom: '20px !important',
-  },
-  boardrightClose: {
-    marginTop: '120px !important',
-  },
 }));
 
 const menuBoardsMenu = [
