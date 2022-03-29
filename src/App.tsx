@@ -6,7 +6,13 @@ import Signup from 'modules/signup/components/Signup';
 import User from './modules/user/components/User';
 import Login from './modules/login/components/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import './index.css';
+import { authorQuoteMap, generateQuoteMap } from './assets/data';
+
+const data = {
+  medium: generateQuoteMap(100),
+  large: generateQuoteMap(500),
+};
 
 declare module '@mui/material/styles/' {
   export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
@@ -18,7 +24,13 @@ const theme = createTheme({
     },
     primary: {
       main: '#096aa7',
-      light: 'white',
+      light: '#4688b9',
+      dark: '#054a74',
+    },
+    secondary: {
+      main: '#d29134',
+      light: '#c0955a',
+      dark: '#b1792d',
     },
   },
   components: {
@@ -54,7 +66,7 @@ const App: React.FC = () => {
             <Route path='login' element={<Login />} />
             <Route path='boards' element={<Boards />} />
             <Route path='signup' element={<Signup />} />
-            <Route path='board/:id' element={<Board />} />
+            <Route path='board/:id' element={<Board initial={data.large} />} />
             <Route path='user/:id' element={<User />} />
           </Routes>
         </BrowserRouter>

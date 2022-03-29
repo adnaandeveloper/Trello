@@ -72,11 +72,17 @@ const Boards = () => {
 
   return (
     <div>
-      <Header />
+      <Header
+        main={theme.palette.primary.main}
+        ligth={theme.palette.primary.light}
+        dark={theme.palette.primary.dark}
+      />
       <Container>
         <Grid
           container
-          sx={{ justifyContent: matchesSM ? 'center' : 'undfined' }}
+          sx={{
+            justifyContent: matchesSM ? 'center' : 'undfined',
+          }}
         >
           <Hidden mdDown>
             <Grid item xs={2} md={2}>

@@ -7,21 +7,18 @@ interface Todo {
   primary?: boolean;
 }
 
-const Item: React.FC<Todo> = (taske: Todo) => {
-  return (
-    <Draggable draggableId={'draggableId'} index={1}>
-      {(provided, snapshot) => (
-        <ListItemButton
-          sx={{ backgroundColor: 'white', margin: '4px' }}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}
-        >
-          <ListItemText primary={taske.taske} />
-        </ListItemButton>
-      )}
-    </Draggable>
-  );
-};
-
+const Item: React.FC<Todo> = (taske) => (
+  <Draggable draggableId={'draggableId'} index={1}>
+    {(provided, snapshot) => (
+      <ListItemButton
+        sx={{ backgroundColor: 'white', margin: '4px' }}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        ref={provided.innerRef}
+      >
+        <ListItemText primary={taske.taske} />
+      </ListItemButton>
+    )}
+  </Draggable>
+);
 export default Item;

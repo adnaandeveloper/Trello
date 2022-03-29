@@ -86,11 +86,16 @@ const menuListLeft = [
     content: <CustomizeAvatar />,
   },
 ];
+type Props = {
+  main: string;
+  ligth: string;
+  dark: string;
+};
 
-const Header = () => {
+const Header = ({ main, ligth, dark }: Props) => {
   const classes = useStyles();
   return (
-    <AppBar className={classes.appBar}>
+    <AppBar className={classes.appBar} sx={{ backgroundColor: dark }}>
       <Toolbar variant='dense' disableGutters>
         <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item>
