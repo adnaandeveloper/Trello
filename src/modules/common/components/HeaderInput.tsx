@@ -23,24 +23,15 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
 
     height: '32px',
-
-    '& .MuiInput-underline:after': {
-      borderBottomColor: theme.palette.primary.main,
-    },
-
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: theme.palette.primary.main,
-      },
-
-      '&:hover fieldset': {
-        borderColor: theme.palette.primary.main,
-      },
-    },
   },
 }));
+type Props = {
+  main: string;
+  light: string;
+  dark: string;
+};
 
-const HeaderInput = () => {
+const HeaderInput = ({ main, light, dark }: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesTabletMM = useMediaQuery(theme.breakpoints.down(1017));
@@ -70,7 +61,21 @@ const HeaderInput = () => {
         onFocus={focusHandler}
         sx={{
           width: matchesTabletMM ? '40px' : '250px',
-          backgroundColor: mouseOver ? '#77a6ca' : focus ? 'white' : '#4688b9',
+          backgroundColor: mouseOver ? light : focus ? 'white' : main,
+
+          '& .MuiInput-underline:after': {
+            borderBottomColor: dark,
+          },
+
+          '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+              borderColor: dark,
+            },
+
+            '&:hover fieldset': {
+              borderColor: dark,
+            },
+          },
         }}
         className={classes.searchInput}
         id='outlined-basic'

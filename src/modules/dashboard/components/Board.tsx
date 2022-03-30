@@ -10,6 +10,9 @@ import {
   DragDropContext,
 } from 'react-beautiful-dnd';
 
+import Header from './../../common/components/Header';
+import { useTheme } from '@mui/material/';
+
 import { QuoteMap, Quote } from 'modules/common/components/types';
 import Column from './column';
 import reorder, { reorderQuoteMap } from 'modules/common/components/reorder';
@@ -21,7 +24,7 @@ const ParentContainer = styled.div<{ height: string }>`
 `;
 
 const Container = styled.div`
-  background-color: ${colors.B100};
+  background-color: #d29134;
   min-height: 100vh;
   /* like display:flex but will allow bleeding over the window width */
   min-width: 100vw;
@@ -42,6 +45,7 @@ type State = {
 };
 
 const Board = (props: Props, state: State) => {
+  const theme = useTheme();
   /* eslint-disable react/sort-comp */
 
   const [myColumns, setColumns] = useState(props.initial);
@@ -139,20 +143,29 @@ const Board = (props: Props, state: State) => {
 
   return (
     <React.Fragment>
-      <DragDropContext onDragEnd={onDragEnd}>
-        {containerHeight ? (
-          <ParentContainer height={containerHeight}>{board}</ParentContainer>
-        ) : (
-          board
-        )}
-      </DragDropContext>
-      <Global
-        styles={css`
-          body {
-            background: ${colors.B200};
-          }
-        `}
-      />
+      <div>
+        <Header
+          main={theme.palette.secondary.main}
+          light={theme.palette.secondary.light}
+          dark={theme.palette.secondary.dark}
+        />
+      </div>
+      <div>
+        <DragDropContext onDragEnd={onDragEnd}>
+          {containerHeight ? (
+            <ParentContainer height={containerHeight}>{board}</ParentContainer>
+          ) : (
+            board
+          )}
+        </DragDropContext>
+        <Global
+          styles={css`
+            body {
+              background: ${colors.B200};
+            }
+          `}
+        />
+      </div>
     </React.Fragment>
   );
 };

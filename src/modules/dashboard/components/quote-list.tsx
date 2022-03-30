@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
-import { Droppable, Draggable, DraggableChildrenFn } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import QuoteItem from './quote-item';
 import { grid } from 'modules/common/components/constants';
 import Title from './title';

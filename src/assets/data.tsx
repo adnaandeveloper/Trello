@@ -8,7 +8,7 @@ import jakeImg from './images/BMO.png';
 
 const Icebox: Author = {
   id: '1',
-  name: 'balabala',
+  name: 'Icebox',
   url: 'http://adventuretime.wikia.com/wiki/Jake',
   avatarUrl: jakeImg,
   colors: {
@@ -19,7 +19,7 @@ const Icebox: Author = {
 
 const backlog: Author = {
   id: '2',
-  name: 'blala',
+  name: 'Rejected',
   url: 'http://adventuretime.wikia.com/wiki/BMO',
   avatarUrl: bmoImg,
   colors: {
@@ -30,7 +30,7 @@ const backlog: Author = {
 
 const todo: Author = {
   id: '3',
-  name: 'bala',
+  name: 'Todo',
   url: 'http://adventuretime.wikia.com/wiki/Finn',
   avatarUrl: finnImg,
   colors: {
@@ -41,7 +41,7 @@ const todo: Author = {
 
 const rejected: Author = {
   id: '4',
-  name: 'bala bala',
+  name: 'Backlog',
   url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
   avatarUrl: princessImg,
   colors: {
@@ -50,7 +50,59 @@ const rejected: Author = {
   },
 };
 
-export const authors: Author[] = [rejected, Icebox, todo, backlog];
+const done: Author = {
+  id: '5',
+  name: 'Done',
+  url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
+  avatarUrl: princessImg,
+  colors: {
+    soft: colors.P50,
+    hard: colors.N400A,
+  },
+};
+
+const doing: Author = {
+  id: '6',
+  name: 'Doing',
+  url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
+  avatarUrl: princessImg,
+  colors: {
+    soft: colors.P50,
+    hard: colors.N400A,
+  },
+};
+
+const review: Author = {
+  id: '6',
+  name: 'in review',
+  url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
+  avatarUrl: princessImg,
+  colors: {
+    soft: colors.P50,
+    hard: colors.N400A,
+  },
+};
+
+const legacy: Author = {
+  id: '7',
+  name: 'Legacy',
+  url: 'http://adventuretime.wikia.com/wiki/Princess_Bubblegum',
+  avatarUrl: princessImg,
+  colors: {
+    soft: colors.P50,
+    hard: colors.N400A,
+  },
+};
+export const authors: Author[] = [
+  Icebox,
+  rejected,
+  todo,
+  backlog,
+  done,
+  doing,
+  review,
+  legacy,
+];
 
 export const quotes: Quote[] = [
   {

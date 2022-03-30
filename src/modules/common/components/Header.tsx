@@ -8,46 +8,13 @@ import { Theme } from '@mui/system';
 import ErrorIcon from '@mui/icons-material/Error';
 import HeaderInput from './HeaderInput';
 import TrelloLogo from './TrelloLogo';
-import CreateButton from './CreateButton';
+
 import CustomizeAvatar from './CustomizeAvatar';
+import CssBaseline from '@mui/material/CssBaseline';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     height: 50,
-  },
-  menuRight: {},
-
-  menuLeft: {},
-  trelloIcon: {
-    width: '75px',
-    height: '15px',
-  },
-  MuiButtonRoot: {
-    color: 'white',
-  },
-  searchInput: {
-    '& input:focus::placeholder': {
-      color: 'black',
-    },
-    '& input::placeholder': {
-      color: 'white',
-    },
-
-    height: '32px',
-
-    '& .MuiInput-underline:after': {
-      borderBottomColor: theme.palette.primary.main,
-    },
-
-    '& .MuiOutlinedInput-root': {
-      '& fieldset': {
-        borderColor: theme.palette.primary.main,
-      },
-
-      '&:hover fieldset': {
-        borderColor: theme.palette.primary.main,
-      },
-    },
   },
 }));
 
@@ -71,7 +38,7 @@ const menuListRigt = [
     content: 'Templates',
   },
   {
-    content: <CreateButton />,
+    content: 'Create',
   },
 ];
 
@@ -88,73 +55,81 @@ const menuListLeft = [
 ];
 type Props = {
   main: string;
-  ligth: string;
+  light: string;
   dark: string;
 };
 
-const Header = ({ main, ligth, dark }: Props) => {
+const Header = ({ main, light, dark }: Props) => {
   const classes = useStyles();
-  return (
-    <AppBar className={classes.appBar} sx={{ backgroundColor: dark }}>
-      <Toolbar variant='dense' disableGutters>
-        <Grid container justifyContent='space-between' alignItems='center'>
-          <Grid item>
-            <Grid item container alignItems='center' spacing={1}>
-              {menuListRigt.map((content, index) => (
-                <Grid item>
-                  <Button
-                    sx={{
-                      paddin: '0 12px',
-                      height: '32px',
-                      textTransform: 'none',
-                      '&:hover': {
-                        backgroundColor: '#4688b9',
-                      },
-                    }}
-                  >
-                    {content.content}
-                  </Button>
-                </Grid>
-              ))}
-            </Grid>
-          </Grid>
 
-          <Grid item sx={{ marginRight: '20px' }}>
-            <Grid
-              item
-              container
-              justifyContent='center'
-              alignItems='center'
-              sx={{ flexGrow: 1 }}
-              spacing={1}
-            >
-              <Grid item>
-                <HeaderInput />
+  return (
+    <>
+      <AppBar
+        className={classes.appBar}
+        sx={{ backgroundColor: dark }}
+        position='fixed'
+      >
+        <Toolbar variant='dense' disableGutters>
+          <Grid container justifyContent='space-between' alignItems='center'>
+            <Grid item>
+              <Grid item container alignItems='center' spacing={1}>
+                {menuListRigt.map((content, index) => (
+                  <Grid item>
+                    <Button
+                      sx={{
+                        paddin: '0 12px',
+                        height: '32px',
+                        textTransform: 'none',
+                        backgroundColor: index === 6 ? main : '',
+                        '&:hover': {
+                          backgroundColor: light,
+                        },
+                      }}
+                    >
+                      {content.content}
+                    </Button>
+                  </Grid>
+                ))}
               </Grid>
-              {menuListLeft.map((item) => (
+            </Grid>
+
+            <Grid item sx={{ marginRight: '20px' }}>
+              <Grid
+                item
+                container
+                justifyContent='center'
+                alignItems='center'
+                sx={{ flexGrow: 1 }}
+                spacing={1}
+              >
                 <Grid item>
-                  <Button
-                    sx={{
-                      width: '30px',
-                      height: '30px',
-                      display: 'inline-block',
-                      padding: 0,
-                      minHeight: 0,
-                      minWidth: 0,
-                      '&:hover': {
-                        backgroundColor: '#4688b9',
-                      },
-                    }}
-                  >
-                    {item.content}
-                  </Button>
+                  <HeaderInput main={main} light={light} dark={dark} />
                 </Grid>
-              ))}
+                {menuListLeft.map((item) => (
+                  <Grid item>
+                    <Button
+                      sx={{
+                        width: '30px',
+                        height: '30px',
+                        display: 'inline-block',
+                        padding: 0,
+                        minHeight: 0,
+                        minWidth: 0,
+                        '&:hover': {
+                          backgroundColor: light,
+                        },
+                      }}
+                    >
+                      {item.content}
+                    </Button>
+                  </Grid>
+                ))}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

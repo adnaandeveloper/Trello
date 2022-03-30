@@ -74,7 +74,7 @@ const Boards = () => {
     <div>
       <Header
         main={theme.palette.primary.main}
-        ligth={theme.palette.primary.light}
+        light={theme.palette.primary.light}
         dark={theme.palette.primary.dark}
       />
       <Container>

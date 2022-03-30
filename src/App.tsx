@@ -10,8 +10,8 @@ import './index.css';
 import { authorQuoteMap, generateQuoteMap } from './assets/data';
 
 const data = {
-  medium: generateQuoteMap(100),
-  large: generateQuoteMap(500),
+  medium: generateQuoteMap(10),
+  large: generateQuoteMap(4),
 };
 
 declare module '@mui/material/styles/' {
@@ -57,6 +57,7 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
+  console.log({ authorQuoteMap });
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -66,7 +67,7 @@ const App: React.FC = () => {
             <Route path='login' element={<Login />} />
             <Route path='boards' element={<Boards />} />
             <Route path='signup' element={<Signup />} />
-            <Route path='board/:id' element={<Board initial={data.large} />} />
+            <Route path='board/:id' element={<Board initial={data.medium} />} />
             <Route path='user/:id' element={<User />} />
           </Routes>
         </BrowserRouter>

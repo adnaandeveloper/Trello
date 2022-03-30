@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
 import { grid, borderRadius } from 'modules/common/components/constants';
@@ -11,7 +11,7 @@ import {
 } from 'react-beautiful-dnd';
 import QuoteList from './quote-list';
 import Title from './title';
-import type { Quote } from 'modules/common/components/types';
+import { Quote } from 'modules/common/components/types';
 
 const Container = styled.div`
   margin: ${grid}px;
@@ -43,12 +43,12 @@ type Props = {
   useClone?: boolean;
 };
 
-export default class Column extends Component<Props> {
-  render() {
-    const title: string = this.props.title;
-    const quotes: Quote[] = this.props.quotes;
-    const index: number = this.props.index;
-    return (
+const Column = (props: Props) => {
+  const title: string = props.title;
+  const quotes: Quote[] = props.quotes;
+  const index: number = props.index;
+  return (
+    <div style={{ marginTop: '5rem' }}>
       <Draggable draggableId={title} index={index}>
         {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) => (
           <Container ref={provided.innerRef} {...provided.draggableProps}>
@@ -68,13 +68,15 @@ export default class Column extends Component<Props> {
                 backgroundColor: snapshot.isDragging ? colors.G50 : null,
               }}
               quotes={quotes}
-              internalScroll={this.props.isScrollable}
-              isCombineEnabled={Boolean(this.props.isCombineEnabled)}
-              useClone={Boolean(this.props.useClone)}
+              internalScroll={props.isScrollable}
+              isCombineEnabled={Boolean(props.isCombineEnabled)}
+              useClone={Boolean(props.useClone)}
             />
           </Container>
         )}
       </Draggable>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default Column;
