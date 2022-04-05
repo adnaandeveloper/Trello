@@ -41,12 +41,19 @@ type Props = {
   isScrollable?: boolean;
   isCombineEnabled?: boolean;
   useClone?: boolean;
+  addQuote: (author?: string) => void;
+  addQuoteName: (name: string) => void;
 };
 
 const Column = (props: Props) => {
   const title: string = props.title;
   const quotes: Quote[] = props.quotes;
   const index: number = props.index;
+
+  const sendTheTitle = () => {
+    props.addQuote(title);
+  };
+
   return (
     <div style={{ marginTop: '5rem' }}>
       <Draggable draggableId={title} index={index}>
@@ -62,8 +69,11 @@ const Column = (props: Props) => {
               </Title>
             </Header>
             <QuoteList
-              listId={title}
+              listId={props.title}
               listType='QUOTE'
+              addQuote={props.addQuote}
+              sendTheTitle={sendTheTitle}
+              addQuoteName={props.addQuoteName}
               style={{
                 backgroundColor: snapshot.isDragging ? colors.G50 : null,
               }}

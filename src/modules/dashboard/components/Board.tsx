@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Global, css } from '@emotion/core';
 import { colors } from '@atlaskit/theme';
@@ -16,6 +16,9 @@ import { useTheme } from '@mui/material/';
 import { QuoteMap, Quote } from 'modules/common/components/types';
 import Column from './column';
 import reorder, { reorderQuoteMap } from 'modules/common/components/reorder';
+import AddListButton from 'modules/common/components/AddListButton';
+
+import AddTaskListField from 'modules/common/components/AddTaskListField';
 
 const ParentContainer = styled.div<{ height: string }>`
   height: ${({ height }) => height};
@@ -37,19 +40,24 @@ type Props = {
   isCombineEnabled?: boolean;
   containerHeight?: string;
   useClone?: boolean;
+  onClickHandler: () => void;
+  listIsAddeable: boolean;
+  onChangHanlerAddAuthor: (name: string) => void;
+  AddNewAotuhersToTheAuthors: () => void;
+  authorName?: string;
+  addQuote: (author?: string) => void;
+  addQuoteName: (name: string) => void;
 };
 
-type State = {
-  columns: QuoteMap;
-  ordered: string[];
-};
-
-const Board = (props: Props, state: State) => {
+const Board = (props: Props) => {
   const theme = useTheme();
   /* eslint-disable react/sort-comp */
-
   const [myColumns, setColumns] = useState(props.initial);
   const [orderedState, SetOrdered] = useState(Object.keys(props.initial));
+  useEffect(() => {
+    setColumns(props.initial);
+    SetOrdered(Object.keys(props.initial));
+  }, [props]);
 
   const onDragEnd = (result: DropResult) => {
     if (result.combine) {
@@ -133,8 +141,21 @@ const Board = (props: Props, state: State) => {
               isScrollable={withScrollableColumns}
               isCombineEnabled={isCombineEnabled}
               useClone={useClone}
+              addQuote={props.addQuote}
+              addQuoteName={props.addQuoteName}
             />
           ))}
+          {props.listIsAddeable ? (
+            <AddTaskListField
+              onClickHandler={props.onClickHandler}
+              onChangHanlerAddAuthor={props.onChangHanlerAddAuthor}
+              AddNewAotuhersToTheAuthors={props.AddNewAotuhersToTheAuthors}
+              authorName={props.authorName}
+            />
+          ) : (
+            <AddListButton onClickHandler={props.onClickHandler} />
+          )}
+
           {provided.placeholder}
         </Container>
       )}

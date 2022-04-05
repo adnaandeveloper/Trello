@@ -1,14 +1,23 @@
 import { Button } from '@mui/material';
-import React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 
-const AddListButton = () => {
+type Props = {
+  onClickHandler: () => void;
+};
+const AddListButton = (props: Props) => {
   return (
     <Button
-      className='col p-1 col-lg-2 h-100'
-      variant='outlined'
-      startIcon={<AddIcon />}
-      sx={{ width: '272px', height: '40px', color: '#ebecf0' }}
+      onClick={() => props.onClickHandler()}
+      startIcon={<AddIcon sx={{ color: 'white' }} />}
+      sx={{
+        justifyContent: 'flex-start',
+        width: '272px',
+        height: 40,
+        color: 'white',
+        marginTop: '5.5rem',
+        textTransform: 'none',
+        backgroundColor: '#ddab69',
+      }}
     >
       Add another List
     </Button>

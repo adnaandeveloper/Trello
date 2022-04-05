@@ -97,14 +97,12 @@ const Signup = () => {
       setMail(true);
       if (emailRegex.test(e)) {
         setMailAccept(true);
-        console.log(mailAccept);
       }
     } else {
       setText('');
       setMail(false);
 
       setMailAccept(false);
-      console.log(mailAccept);
     }
   };
   return (

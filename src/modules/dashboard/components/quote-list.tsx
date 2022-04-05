@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -12,6 +12,9 @@ import {
   DraggableProvided,
   DraggableStateSnapshot,
 } from 'react-beautiful-dnd';
+import AddOneTaske from './AddOneTaske';
+
+import AddCardTextFeild from './AddCardTextFeild';
 
 export const getBackgroundColor = (
   isDraggingOver: boolean,
@@ -45,10 +48,11 @@ const Wrapper = styled.div<{
 `;
 
 const scrollContainerHeight: number = 250;
+const minHeight: number = 0;
 
 const DropZone = styled.div`
   /* stop the list collapsing when empty */
-  min-height: ${scrollContainerHeight}px;
+  min-height: ${minHeight}px;
 
   /*
     not relying on the items for a margin-bottom
@@ -81,6 +85,9 @@ type Props = {
   ignoreContainerClipping?: boolean;
 
   useClone?: boolean | undefined;
+  addQuote: (author?: string) => void;
+  sendTheTitle: () => void;
+  addQuoteName: (name: string) => void;
 };
 
 type QuoteListProps = {
@@ -96,13 +103,15 @@ const InnerQuoteList = React.memo(function InnerQuoteList(
         dragProvided: DraggableProvided,
         dragSnapshot: DraggableStateSnapshot
       ) => (
-        <QuoteItem
-          key={quote.id}
-          quote={quote}
-          isDragging={dragSnapshot.isDragging}
-          isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
-          provided={dragProvided}
-        />
+        <div style={{ minHeight: '0px !important' }}>
+          <QuoteItem
+            key={quote.id}
+            quote={quote}
+            isDragging={dragSnapshot.isDragging}
+            isGroupedOver={Boolean(dragSnapshot.combineTargetFor)}
+            provided={dragProvided}
+          />
+        </div>
       )}
     </Draggable>
   ));
@@ -112,19 +121,49 @@ type InnerListProps = {
   dropProvided: DroppableProvided;
   quotes: Quote[];
   title?: string;
+  addQuote: (author?: string) => void;
+  listId?: string;
+  sendTheTitle: () => void;
+  addQuoteName: (name: string) => void;
 };
 
 function InnerList(props: InnerListProps) {
   const { quotes, dropProvided } = props;
   const title = props.title ? <Title>{props.title}</Title> : null;
+  const [showTextField, setShowTextField] = useState(false);
+
+  const togleShowTextField = () => {
+    setShowTextField(!showTextField);
+  };
 
   return (
     <Container>
-      {title}
-      <DropZone ref={dropProvided.innerRef}>
-        <InnerQuoteList quotes={quotes} />
-        {dropProvided.placeholder}
-      </DropZone>
+      <div>
+        {title}
+        <DropZone ref={dropProvided.innerRef}>
+          <div>
+            <InnerQuoteList quotes={quotes} />
+          </div>
+
+          {dropProvided.placeholder}
+        </DropZone>
+        {showTextField ? (
+          <AddCardTextFeild
+            togleShowTextField={togleShowTextField}
+            addQuote={props.addQuote}
+            listId={props.listId}
+            sendTheTitle={props.sendTheTitle}
+            addQuoteName={props.addQuoteName}
+          />
+        ) : (
+          <AddOneTaske
+            addQuote={props.addQuote}
+            listId={props.listId}
+            togleShowTextField={togleShowTextField}
+            sendTheTitle={props.sendTheTitle}
+          />
+        )}
+      </div>
     </Container>
   );
 }
@@ -141,7 +180,6 @@ export default function QuoteList(props: Props) {
     style,
     quotes,
     title,
-    useClone,
   } = props;
 
   return (
@@ -169,6 +207,10 @@ export default function QuoteList(props: Props) {
                 quotes={quotes}
                 title={title}
                 dropProvided={dropProvided}
+                addQuote={props.addQuote}
+                sendTheTitle={props.sendTheTitle}
+                addQuoteName={props.addQuoteName}
+                // eslint-disable-next-line react/jsx-no-duplicate-props
               />
             </ScrollContainer>
           ) : (
@@ -176,6 +218,10 @@ export default function QuoteList(props: Props) {
               quotes={quotes}
               title={title}
               dropProvided={dropProvided}
+              addQuote={props.addQuote}
+              sendTheTitle={props.sendTheTitle}
+              addQuoteName={props.addQuoteName}
+              // eslint-disable-next-line react/jsx-no-duplicate-props
             />
           )}
         </Wrapper>

@@ -95,15 +95,6 @@ const Container = styled.a<{
   display: flex;
 `;
 
-const Avatar = styled.img`
-  width: ${imageSize}px;
-  height: ${imageSize}px;
-  border-radius: 50%;
-  margin-right: ${grid}px;
-  flex-shrink: 0;
-  flex-grow: 0;
-`;
-
 const Content = styled.div`
   /* flex child */
   flex-grow: 1;
@@ -192,7 +183,6 @@ function QuoteItem(props: Props) {
       data-index={index}
       aria-label={`${quote.author.name} quote ${quote.content}`}
     >
-      <Avatar src={quote.author.avatarUrl} alt={quote.author.name} />
       {isClone ? <CloneBadge>Clone</CloneBadge> : null}
       <Content>
         <BlockQuote>{quote.content}</BlockQuote>

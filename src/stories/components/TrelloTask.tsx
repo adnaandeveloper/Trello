@@ -31,23 +31,18 @@ export const TrelloTask = ({ taske: string }: Todo) => {
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
 
-    console.log(result);
-
     if (!destination) {
-      console.log('noooow');
       return;
     }
     if (destination.droppableId === source.droppableId) {
-      console.log('in the if');
       return;
     }
-    console.log('hello we are going her');
+
     let add;
     let active = todos;
     let complete = todosComp;
     // Source Logic
     if (source.droppableId === 'TodosList') {
-      console.log(active[0]);
       add = active[0];
       active.splice(0, 1);
     } else {
