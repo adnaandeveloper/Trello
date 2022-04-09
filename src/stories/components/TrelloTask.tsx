@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { T } from '@transifex/react';
-import { Container, Grid, List, ListItem } from '@mui/material';
+import { Container, Grid, List } from '@mui/material';
 import Item from './Item';
-import {
-  Droppable,
-  DragDropContext,
-  Draggable,
-  DropResult,
-} from 'react-beautiful-dnd';
-import { Primary } from 'stories/Button.stories';
+import { Droppable, DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 interface TrelloTaskProps {
   taske: string;
@@ -81,8 +75,8 @@ export const TrelloTask = ({ taske: string }: Todo) => {
                 <Grid item>
                   <h1> Items </h1>
 
-                  {todos.map((item) => (
-                    <List>
+                  {todos.map((item, index) => (
+                    <List key={index}>
                       <Item taske={item.taske} />
                     </List>
                   ))}

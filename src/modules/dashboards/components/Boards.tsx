@@ -134,8 +134,8 @@ const Boards = () => {
                 spacing={1}
                 sx={{ marginBottom: '10px' }}
               >
-                {['red', 'blue', 'orange', 'black'].map((color) => (
-                  <Grid item>
+                {['red', 'blue', 'orange', 'black'].map((color, index) => (
+                  <Grid item key={index}>
                     <Button>
                       <BoardCard color={color} />
                     </Button>
@@ -201,7 +201,7 @@ const Boards = () => {
               </Grid>
 
               {textUnderPersonalBoards.map((title, index) => (
-                <Grid item sx={{ marginLeft: title.marginLeft }}>
+                <Grid item sx={{ marginLeft: title.marginLeft }} key={index}>
                   <Typography
                     sx={{
                       color: title.color,

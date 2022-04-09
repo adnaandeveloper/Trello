@@ -17,9 +17,7 @@ import { QuoteMap, Quote } from 'modules/common/components/types';
 import Column from './column';
 import reorder, { reorderQuoteMap } from 'modules/common/components/reorder';
 import AddListButton from 'modules/common/components/AddListButton';
-
 import AddTaskListField from 'modules/common/components/AddTaskListField';
-
 const ParentContainer = styled.div<{ height: string }>`
   height: ${({ height }) => height};
   overflow-x: hidden;
@@ -145,6 +143,7 @@ const Board = (props: Props) => {
               addQuoteName={props.addQuoteName}
             />
           ))}
+          {provided.placeholder}
           {props.listIsAddeable ? (
             <AddTaskListField
               onClickHandler={props.onClickHandler}
@@ -155,8 +154,6 @@ const Board = (props: Props) => {
           ) : (
             <AddListButton onClickHandler={props.onClickHandler} />
           )}
-
-          {provided.placeholder}
         </Container>
       )}
     </Droppable>
@@ -164,7 +161,7 @@ const Board = (props: Props) => {
 
   return (
     <React.Fragment>
-      <div>
+      <div onClick={() => console.log()}>
         <Header
           main={theme.palette.secondary.main}
           light={theme.palette.secondary.light}
@@ -179,6 +176,7 @@ const Board = (props: Props) => {
             board
           )}
         </DragDropContext>
+
         <Global
           styles={css`
             body {

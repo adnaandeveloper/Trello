@@ -76,10 +76,11 @@ const BoardsRightMenu = () => {
       className={classes.leftBox}
       position='fixed'
     >
-      {menuBoardsMenu.map((menuItem) => (
+      {menuBoardsMenu.map((menuItem, index) => (
         <Grid
           item
           className={classes.leftBoxItem}
+          key={index}
           sx={{
             '&:nth-child(1)': {
               backgroundColor: '#E4F0F6',

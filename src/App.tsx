@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useEffect, useState, useContext } from 'react';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import Board from './modules/dashboard/components/Board';
 import Boards from './modules/dashboards/components/Boards';
 import Signup from 'modules/signup/components/Signup';
@@ -9,6 +9,10 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './index.css';
 import { getAllAuthors, addAuthor, quotes, addOneQuote } from './assets/data';
 import { Author, Quote, QuoteMap } from 'assets/types';
+
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { AuthContext } from 'context/api-context';
+import { isLogedIn } from 'context/api-helper';
 
 declare module '@mui/material/styles/' {
   export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
@@ -52,7 +56,12 @@ const theme = createTheme({
   },
 });
 
+const queryClient = new QueryClient();
+
 const App: React.FC = () => {
+  const { loggedIn, token } = useContext(AuthContext);
+  console.log('hvad er i token mon? ' + token);
+
   const [allAuthors] = useState(getAllAuthors());
   const [listIsAddeable, setListIsAddeable] = useState(false);
   const [authorName, setAuthorName] = useState('');
@@ -97,13 +106,29 @@ const App: React.FC = () => {
     addAuthor(authorName);
     setAuthorName('');
   };
+  const navigate = useNavigate();
 
-  useEffect(() => {}, [allAuthors, allQuotes]);
+  useEffect(() => {
+    const authirise = async () => {
+      if (!localStorage.getItem('token')) {
+        console.log('token is ' + localStorage.getItem('token'));
+        navigate('login');
+      } else {
+        const data = await isLogedIn();
+        if (data) {
+          navigate('boards');
+        } else {
+          navigate('login');
+        }
+      }
+    };
+    authirise();
+  }, [allAuthors, allQuotes]);
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
           <Routes>
             <Route path='/' element={<App />} />
             <Route path='login' element={<Login />} />
@@ -128,8 +153,8 @@ const App: React.FC = () => {
             />
             <Route path='user/:id' element={<User />} />
           </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 };

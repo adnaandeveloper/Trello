@@ -15,7 +15,10 @@ import {
 import { makeStyles } from '@mui/styles';
 import rigtPic from './../../../assets/right.svg';
 import lefPic from './../../../assets/left.svg';
-import { Theme } from '@mui/system';
+import { Box, Theme } from '@mui/system';
+import { login, signUp } from 'context/api-helper';
+import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
@@ -26,6 +29,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '14em',
     marginTop: '2em',
     marginBottom: '2em',
+  },
+  passwordInput: {
+    width: '20em',
+    '& .MuiOutlinedInput-notchedOutline legend': { display: 'none' },
   },
   loginBox: {
     background: 'hsl(0deg 0% 100%)',
@@ -60,6 +67,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   mailInput: {
     width: '20em',
     backgroundColor: '#FAFBFC',
+    '& .MuiOutlinedInput-notchedOutline legend': { display: 'none' },
   },
   ButtonsInLoginBox: {
     width: '23em',
@@ -87,22 +95,50 @@ const Signup = () => {
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const [mail, setMail] = useState(false);
   const [mailAccept, setMailAccept] = useState(false);
-  const [text, setText] = useState('');
+  const [mailText, setMailText] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const emailRegex = /\S+@\S+\.\S+/;
 
   const handleMailInput = (e: string) => {
     if (e) {
-      setText(e);
+      setMailText(e);
       setMail(true);
       if (emailRegex.test(e)) {
         setMailAccept(true);
       }
     } else {
-      setText('');
+      setMailText('');
       setMail(false);
 
       setMailAccept(false);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('mailText'),
+      password: data.get('password'),
+    });
+    console.log({ data });
+
+    const sendtData = await signUp(data.get('mailText'), password);
+    console.log({ sendtData });
+    if (sendtData.jwt) {
+      login(sendtData.jwt, sendtData.user.username);
+      setLoading(false);
+      localStorage.setItem('token', sendtData.jwt);
+      console.log(sendtData.user.username);
+      // localStorage.setItem('userName', sendtData.user.username);
+      navigate('/boards');
+    } else {
+      setLoading(false);
     }
   };
   return (
@@ -148,51 +184,75 @@ const Signup = () => {
                   Sign up for your account
                 </Typography>
               </Grid>
-              <Grid item>
-                <TextField
-                  value={text}
-                  id='outlined-basic'
-                  type='text'
-                  placeholder='Enter mail'
-                  variant='outlined'
-                  size='small'
-                  className={classes.mailInput}
-                  onChange={(e) => {
-                    handleMailInput(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item>
-                <Typography sx={{ fontSize: '12px' }}>
-                  By signing up, you confirm that you've read and <br />{' '}
-                  accepted our{' '}
-                  <span style={{ color: '#0052CC' }}>
-                    {' '}
-                    <Link href='#'>Terms of Service</Link>{' '}
-                  </span>{' '}
-                  and
-                  <span style={{ color: '#0052CC' }}>
-                    {' '}
-                    <Link href='#'> Privacy Policy.</Link>{' '}
-                  </span>
-                </Typography>
-              </Grid>
+              <Box
+                component='form'
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                  handleSubmit(e)
+                }
+                noValidate
+                sx={{ mt: 1 }}
+              >
+                <Grid item>
+                  <TextField
+                    id='email'
+                    name='mailText'
+                    value={mailText}
+                    placeholder='Enter mail'
+                    variant='outlined'
+                    size='small'
+                    className={classes.mailInput}
+                    onChange={(e) => {
+                      handleMailInput(e.target.value);
+                    }}
+                  />
+                </Grid>
+                <Grid item mt={2} mb={2}>
+                  <TextField
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    name='password'
+                    type='password'
+                    id='password'
+                    placeholder='Enter password'
+                    variant='outlined'
+                    size='small'
+                    className={classes.passwordInput}
+                  />
+                </Grid>
 
-              <Grid item>
-                <Button
-                  disabled={!mailAccept}
-                  className={classes.ButtonsInLoginBox}
-                  sx={{
-                    color: mailAccept ? 'white' : '#8c8c8c',
-                    backgroundColor: mailAccept ? '#5AAC44' : '#E2E4E6',
-                    '&:hover': {
-                      backgroundColor: mailAccept ? '#6ebe58' : '#E2E4E6',
-                    },
-                  }}
-                >
-                  Continue
-                </Button>
-              </Grid>
+                <Grid item>
+                  <Typography sx={{ fontSize: '12px' }}>
+                    By signing up, you confirm that you've read and <br />{' '}
+                    accepted our{' '}
+                    <span style={{ color: '#0052CC' }}>
+                      {' '}
+                      <Link href='#'>Terms of Service</Link>{' '}
+                    </span>{' '}
+                    and
+                    <span style={{ color: '#0052CC' }}>
+                      {' '}
+                      <Link href='#'> Privacy Policy.</Link>{' '}
+                    </span>
+                  </Typography>
+                </Grid>
+
+                <Grid item mt={2}>
+                  <Button
+                    type='submit'
+                    disabled={!mailAccept}
+                    className={classes.ButtonsInLoginBox}
+                    sx={{
+                      color: mailAccept ? 'white' : '#8c8c8c',
+                      backgroundColor: mailAccept ? '#5AAC44' : '#E2E4E6',
+                      '&:hover': {
+                        backgroundColor: mailAccept ? '#6ebe58' : '#E2E4E6',
+                      },
+                    }}
+                  >
+                    {loading ? <CircularProgress /> : 'Continue'}
+                  </Button>
+                </Grid>
+              </Box>
 
               {!mail && (
                 <Grid
@@ -263,6 +323,7 @@ const Signup = () => {
 
                   <Grid item>
                     <Typography
+                      onClick={() => navigate('/login')}
                       sx={{
                         color: '#0052CC',
                         fontSize: '14px;',

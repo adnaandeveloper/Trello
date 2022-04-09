@@ -11,7 +11,10 @@ type Props = {
 const AddTaskListField = (props: Props) => {
   return (
     <Grid container sx={{ marginTop: '5.5rem', height: 60 }}>
-      <Grid item sx={{ backgroundColor: '#ebecf0', padding: '1px' }}>
+      <Grid
+        item
+        sx={{ backgroundColor: '#ebecf0', padding: '1px', marginTop: '5' }}
+      >
         <TextField
           value={props.authorName}
           onChange={(e) => props.onChangHanlerAddAuthor(e.target.value)}
@@ -25,6 +28,9 @@ const AddTaskListField = (props: Props) => {
             textTransform: 'none',
             backgroundColor: 'white',
             padding: '0',
+            '& .MuiOutlinedInput-notchedOutline legend': { display: 'none' },
+            '& .MuiInputBase-root': { marginTop: '3px' },
+            m: 1,
           }}
         ></TextField>
         <Grid container direction='row' spacing={1}>

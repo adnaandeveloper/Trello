@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { AppBar, Toolbar, Grid, Button } from '@mui/material/';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -11,6 +11,8 @@ import TrelloLogo from './TrelloLogo';
 
 import CustomizeAvatar from './CustomizeAvatar';
 import CssBaseline from '@mui/material/CssBaseline';
+import { AuthContext } from 'context/api-context';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -61,6 +63,13 @@ type Props = {
 
 const Header = ({ main, light, dark }: Props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
+  const { loggedIn, userName, logOut } = useContext(AuthContext);
+  console.log('what is i userName ? =>' + userName);
+  const handlerLogout = () => {
+    logOut();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -74,7 +83,7 @@ const Header = ({ main, light, dark }: Props) => {
             <Grid item>
               <Grid item container alignItems='center' spacing={1}>
                 {menuListRigt.map((content, index) => (
-                  <Grid item>
+                  <Grid item key={index}>
                     <Button
                       sx={{
                         paddin: '0 12px',
@@ -90,6 +99,8 @@ const Header = ({ main, light, dark }: Props) => {
                     </Button>
                   </Grid>
                 ))}
+                <Button onClick={() => handlerLogout()}>logOut</Button>
+                <Button sx={{ color: 'white !important' }}>{userName}</Button>
               </Grid>
             </Grid>
 
@@ -105,8 +116,8 @@ const Header = ({ main, light, dark }: Props) => {
                 <Grid item>
                   <HeaderInput main={main} light={light} dark={dark} />
                 </Grid>
-                {menuListLeft.map((item) => (
-                  <Grid item>
+                {menuListLeft.map((item, index) => (
+                  <Grid item key={index}>
                     <Button
                       sx={{
                         width: '30px',

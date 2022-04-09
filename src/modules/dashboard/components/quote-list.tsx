@@ -138,15 +138,13 @@ function InnerList(props: InnerListProps) {
 
   return (
     <Container>
-      <div>
-        {title}
-        <DropZone ref={dropProvided.innerRef}>
-          <div>
-            <InnerQuoteList quotes={quotes} />
-          </div>
+      {title}
+      <DropZone ref={dropProvided.innerRef}>
+        <InnerQuoteList quotes={quotes} />
 
-          {dropProvided.placeholder}
-        </DropZone>
+        {dropProvided.placeholder}
+      </DropZone>
+      <div style={{}}>
         {showTextField ? (
           <AddCardTextFeild
             togleShowTextField={togleShowTextField}

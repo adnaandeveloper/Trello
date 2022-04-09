@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useRef, useEffect, useState } from 'react';
 
 import {
   Grid,
@@ -8,7 +8,9 @@ import {
   useMediaQuery,
   useTheme,
   Hidden,
+  Box,
 } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { makeStyles } from '@mui/styles';
 
@@ -16,6 +18,12 @@ import rigtPic from './../../../assets/right.svg';
 import lefPic from './../../../assets/left.svg';
 
 import { Theme } from '@mui/system';
+import { useQuery } from 'react-query';
+
+import { login } from 'context/api-helper';
+import { AuthContext } from 'context/api-context';
+import { useNavigate } from 'react-router-dom';
+import { authLogin } from 'auth/auth';
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
@@ -58,9 +66,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   passwordInput: {
     width: '20em',
+    '& .MuiOutlinedInput-notchedOutline legend': { display: 'none' },
   },
   mailInput: {
     width: '20em',
+    '& .MuiOutlinedInput-notchedOutline legend': { display: 'none' },
   },
   ButtonsInLoginBox: {
     width: '23em',
@@ -80,6 +90,50 @@ const Login = () => {
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
+  const { loggedIn, userName, logIn, logOut, token } = useContext(AuthContext);
+  const whatisthis = localStorage.getItem('token')
+    ? localStorage.getItem('token')
+    : '';
+  const isMounted = useRef(false);
+
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
+    event.preventDefault();
+    // const data = new FormData(event.currentTarget);
+
+    const sendtData = await login(email, password);
+    if (sendtData.jwt) {
+      logIn(sendtData.jwt, sendtData.user.firstName);
+      setLoading(false);
+      localStorage.setItem('token', sendtData.jwt);
+      localStorage.setItem('userName', sendtData.user.username);
+      navigate('/boards');
+    } else {
+      setLoading(false);
+    }
+  };
+  /**  
+
+  const { data } = useQuery(['product', email, password], () =>
+    login(email, password)
+  );
+
+  if (data.status === 'loading') {
+    console.log('loading...');
+    return <div>Loading...</div>;
+  }
+
+  if (data.status === 'error') {
+    console.log('error...');
+    return <div>Error</div>;
+  }
+  */
+
   return (
     <Grid
       container
@@ -123,40 +177,56 @@ const Login = () => {
                   Log in to Trello
                 </Typography>
               </Grid>
-              <Grid item>
-                <TextField
-                  id='outlined-basic'
-                  placeholder='Enter mail'
-                  variant='outlined'
-                  size='small'
-                  className={classes.mailInput}
-                />
-              </Grid>
-              <Grid item>
-                <TextField
-                  id='outlined-basic'
-                  type='password'
-                  placeholder='Enter password'
-                  variant='outlined'
-                  size='small'
-                  className={classes.passwordInput}
-                />
-              </Grid>
+              <Box
+                component='form'
+                onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+                  handleSubmit(e)
+                }
+                noValidate
+                sx={{ mt: 1 }}
+              >
+                <Grid item>
+                  <TextField
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    placeholder='Enter mail'
+                    variant='outlined'
+                    size='small'
+                    className={classes.mailInput}
+                    id='email'
+                    name='email'
+                  />
+                </Grid>
+                <Grid item mt={2} mb={2}>
+                  <TextField
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    name='password'
+                    type='password'
+                    id='password'
+                    placeholder='Enter password'
+                    variant='outlined'
+                    size='small'
+                    className={classes.passwordInput}
+                  />
+                </Grid>
 
-              <Grid item>
-                <Button
-                  className={classes.ButtonsInLoginBox}
-                  sx={{
-                    color: 'white',
-                    backgroundColor: '#5AAC44',
-                    '&:hover': {
-                      backgroundColor: '#6ebe58',
-                    },
-                  }}
-                >
-                  Log in
-                </Button>
-              </Grid>
+                <Grid item>
+                  <Button
+                    type='submit'
+                    className={classes.ButtonsInLoginBox}
+                    sx={{
+                      color: 'white',
+                      backgroundColor: '#5AAC44',
+                      '&:hover': {
+                        backgroundColor: '#6ebe58',
+                      },
+                    }}
+                  >
+                    {loading ? <CircularProgress /> : 'login in'}
+                  </Button>
+                </Grid>
+              </Box>
 
               <Grid>
                 <Typography
@@ -222,6 +292,17 @@ const Login = () => {
                 >
                   Log in with SSO
                 </Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  onClick={() => navigate('/signup')}
+                  sx={{
+                    backgroundColor: '#59ac44',
+                    '&:hover': { backgroundColor: '#6ebe58' },
+                  }}
+                >
+                  Register
+                </Button>
               </Grid>
             </Grid>
           </Grid>

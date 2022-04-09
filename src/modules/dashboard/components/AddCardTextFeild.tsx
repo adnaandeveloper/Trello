@@ -18,24 +18,32 @@ const AddCardTextFeild = (props: Props) => {
         sx={{
           backgroundColor: '#ebecf0',
           padding: '1px',
-          height: '65px',
-          marginLeft: '-16px',
+          height: '114px',
+          marginLeft: '-8px',
+          width: '250px',
         }}
       >
         <TextField
+          id='outlined-basic'
+          variant='outlined'
           fullWidth
           multiline
           onChange={(e) => props.addQuoteName(e.target.value)}
           placeholder='Enter a title for this card...'
           sx={{
             m: 1,
-            width: '25ch',
+
+            width: '225px',
             justifyContent: 'flex-start',
             color: 'white',
             textTransform: 'none',
             backgroundColor: 'white',
             padding: '0',
             height: '58px',
+            '& .MuiOutlinedInput-notchedOutline legend': {
+              display: 'none',
+            },
+            '& .MuiInputBase-root': { marginTop: '3px' },
           }}
         ></TextField>
         <Grid container direction='row' spacing={1}>
