@@ -107,11 +107,14 @@ const Login = () => {
     // const data = new FormData(event.currentTarget);
 
     const sendtData = await login(email, password);
+    console.log('sendt data is under this console cadnaan ');
+    console.log({ sendtData });
     if (sendtData.jwt) {
       logIn(sendtData.jwt, sendtData.user.firstName);
       setLoading(false);
       localStorage.setItem('token', sendtData.jwt);
       localStorage.setItem('userName', sendtData.user.username);
+      localStorage.setItem('userEmail', sendtData.user.email);
       navigate('/boards');
     } else {
       setLoading(false);

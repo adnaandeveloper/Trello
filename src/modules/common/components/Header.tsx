@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-
+import React from 'react';
 import { AppBar, Toolbar, Grid, Button } from '@mui/material/';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -8,11 +7,7 @@ import { Theme } from '@mui/system';
 import ErrorIcon from '@mui/icons-material/Error';
 import HeaderInput from './HeaderInput';
 import TrelloLogo from './TrelloLogo';
-
 import CustomizeAvatar from './CustomizeAvatar';
-import CssBaseline from '@mui/material/CssBaseline';
-import { AuthContext } from 'context/api-context';
-import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -63,14 +58,6 @@ type Props = {
 
 const Header = ({ main, light, dark }: Props) => {
   const classes = useStyles();
-  const navigate = useNavigate();
-  const { loggedIn, userName, logOut } = useContext(AuthContext);
-  console.log('what is i userName ? =>' + userName);
-  const handlerLogout = () => {
-    logOut();
-    navigate('/login');
-  };
-
   return (
     <>
       <AppBar
@@ -99,8 +86,6 @@ const Header = ({ main, light, dark }: Props) => {
                     </Button>
                   </Grid>
                 ))}
-                <Button onClick={() => handlerLogout()}>logOut</Button>
-                <Button sx={{ color: 'white !important' }}>{userName}</Button>
               </Grid>
             </Grid>
 

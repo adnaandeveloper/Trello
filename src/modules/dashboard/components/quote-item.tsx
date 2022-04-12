@@ -5,6 +5,7 @@ import { colors } from '@atlaskit/theme';
 import { borderRadius, grid } from 'modules/common/components/constants';
 import type { Quote, AuthorColors } from 'modules/common/components/types';
 import type { DraggableProvided } from 'react-beautiful-dnd';
+import { TeskDialog } from 'modules/common/components/TeskDialog';
 
 type Props = {
   quote: Quote;
@@ -167,31 +168,45 @@ function QuoteItem(props: Props) {
   const { quote, isDragging, isGroupedOver, provided, style, isClone, index } =
     props;
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value: string) => {
+    setOpen(false);
+  };
+
   return (
-    <Container
-      href={quote.author.url}
-      isDragging={isDragging}
-      isGroupedOver={isGroupedOver}
-      isClone={isClone}
-      colors={quote.author.colors}
-      ref={provided.innerRef}
-      {...provided.draggableProps}
-      {...provided.dragHandleProps}
-      data-style={getStyle(provided, style)}
-      data-is-dragging={isDragging}
-      data-testid={quote.id}
-      data-index={index}
-      aria-label={`${quote.author.name} quote ${quote.content}`}
-    >
-      {isClone ? <CloneBadge>Clone</CloneBadge> : null}
-      <Content>
-        <BlockQuote>{quote.content}</BlockQuote>
-        <Footer>
-          <Author colors={quote.author.colors}>{quote.author.name}</Author>
-          <QuoteId>id:{quote.id}</QuoteId>
-        </Footer>
-      </Content>
-    </Container>
+    <div>
+      <Container
+        isDragging={isDragging}
+        isGroupedOver={isGroupedOver}
+        isClone={isClone}
+        colors={quote.author.colors}
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+        data-style={getStyle(provided, style)}
+        data-is-dragging={isDragging}
+        data-testid={quote.id}
+        data-index={index}
+        aria-label={`${quote.author.name} quote ${quote.content}`}
+      >
+        {isClone ? <CloneBadge>Clone</CloneBadge> : null}
+        <Content>
+          <BlockQuote onClick={() => handleClickOpen()}>
+            {quote.content}
+          </BlockQuote>
+          <Footer>
+            <Author colors={quote.author.colors}>{quote.author.name}</Author>
+            <QuoteId>id:{quote.id}</QuoteId>
+          </Footer>
+        </Content>
+      </Container>
+      <TeskDialog selectedValue='' open={open} onClose={handleClose} />
+    </div>
   );
 }
 

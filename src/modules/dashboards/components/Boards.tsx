@@ -17,6 +17,7 @@ import BoardCard from 'modules/common/components/BoardCard';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BoardsRightMenu from './BoardsRightMenu';
 import CloseButton from 'modules/common/components/CloseButton';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftBox: {
@@ -64,6 +65,7 @@ const textUnderPersonalBoards = [
 
 const Boards = () => {
   const classes = useStyles();
+  const navigate = useNavigate();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const title = 'Most popular templates';
@@ -169,7 +171,7 @@ const Boards = () => {
               </Grid>
 
               <Grid item sx={{ marginBottom: '40px' }}>
-                <Button>
+                <Button onClick={() => navigate('/board/1')}>
                   <BoardCard color='red' />
                 </Button>
               </Grid>

@@ -8,7 +8,7 @@ import jakeImg from './images/BMO.png';
 const Icebox: Author = {
   id: '1',
   name: 'Icebox',
-  url: 'http://adventuretime.wikia.com/wiki/Jake',
+
   avatarUrl: jakeImg,
   colors: {
     soft: colors.Y50,
@@ -19,7 +19,7 @@ const Icebox: Author = {
 const backlog: Author = {
   id: '2',
   name: 'Backlog',
-  url: 'http://adventuretime.wikia.com/wiki/BMO',
+
   avatarUrl: bmoImg,
   colors: {
     soft: colors.G50,
@@ -30,7 +30,6 @@ const backlog: Author = {
 const todo: Author = {
   id: '3',
   name: 'Todo',
-  url: 'http://adventuretime.wikia.com/wiki/Finn',
   avatarUrl: finnImg,
   colors: {
     soft: colors.B50,
@@ -99,7 +98,6 @@ export const addAuthor = (name: string) => {
       .substring(1),
     name: name,
     avatarUrl: 'fdfd',
-    url: 'www.google.com',
     colors: {
       soft: colors.P50,
       hard: colors.N400A,
