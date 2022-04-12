@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useEffect, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import {
   Grid,
@@ -9,21 +9,20 @@ import {
   useTheme,
   Hidden,
   Box,
+  Snackbar,
 } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { makeStyles } from '@mui/styles';
 
 import rigtPic from './../../../assets/right.svg';
 import lefPic from './../../../assets/left.svg';
 
 import { Theme } from '@mui/system';
-import { useQuery } from 'react-query';
 
 import { login } from 'context/api-helper';
 import { AuthContext } from 'context/api-context';
 import { useNavigate } from 'react-router-dom';
-import { authLogin } from 'auth/auth';
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
@@ -86,16 +85,20 @@ const useStyles = makeStyles((theme: Theme) => ({
     fontWeight: 'bold',
   },
 }));
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 const Login = () => {
+  const [open, setOpen] = React.useState(false);
+  const [message, setMassage] = React.useState('');
+
   const classes = useStyles();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const { loggedIn, userName, logIn, logOut, token } = useContext(AuthContext);
-  const whatisthis = localStorage.getItem('token')
-    ? localStorage.getItem('token')
-    : '';
-  const isMounted = useRef(false);
-
+  const { logIn } = useContext(AuthContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
@@ -105,38 +108,26 @@ const Login = () => {
     setLoading(true);
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
-
-    const sendtData = await login(email, password);
-    console.log('sendt data is under this console cadnaan ');
-    console.log({ sendtData });
+    const sendtData = await login(email, password).catch((error) => {
+      setMassage(error.message);
+      setOpen(true);
+      console.log(error.message);
+      setLoading(false);
+    });
     if (sendtData.jwt) {
+      setOpen(false);
       logIn(sendtData.jwt, sendtData.user.firstName);
       setLoading(false);
       localStorage.setItem('token', sendtData.jwt);
       localStorage.setItem('userName', sendtData.user.username);
-      localStorage.setItem('userEmail', sendtData.user.email);
+      localStorage.setItem('userName', sendtData.user.email);
       navigate('/boards');
     } else {
       setLoading(false);
+      setOpen(false);
+      setMassage('');
     }
   };
-  /**  
-
-  const { data } = useQuery(['product', email, password], () =>
-    login(email, password)
-  );
-
-  if (data.status === 'loading') {
-    console.log('loading...');
-    return <div>Loading...</div>;
-  }
-
-  if (data.status === 'error') {
-    console.log('error...');
-    return <div>Error</div>;
-  }
-  */
-
   return (
     <Grid
       container
@@ -230,7 +221,6 @@ const Login = () => {
                   </Button>
                 </Grid>
               </Box>
-
               <Grid>
                 <Typography
                   variant='h6'
@@ -250,7 +240,6 @@ const Login = () => {
                   Continue with Google
                 </Button>
               </Grid>
-
               <Grid item>
                 <Button
                   className={classes.ButtonsInLoginBox}
@@ -262,7 +251,6 @@ const Login = () => {
                   Continue with Micrsoft
                 </Button>
               </Grid>
-
               <Grid item>
                 <Button
                   className={classes.ButtonsInLoginBox}
@@ -274,7 +262,6 @@ const Login = () => {
                   Continue with Apple
                 </Button>
               </Grid>
-
               <Grid item>
                 <Button
                   className={classes.ButtonsInLoginBox}
@@ -286,7 +273,6 @@ const Login = () => {
                   Continue with Slak
                 </Button>
               </Grid>
-
               <Grid item>
                 <Typography
                   sx={{
@@ -306,6 +292,15 @@ const Login = () => {
                 >
                   Register
                 </Button>
+              </Grid>
+              <Grid item>
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={() => setOpen(false)}
+                >
+                  <Alert severity='error'>{message}</Alert>
+                </Snackbar>
               </Grid>
             </Grid>
           </Grid>

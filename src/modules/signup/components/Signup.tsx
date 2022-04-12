@@ -10,6 +10,7 @@ import {
   Hidden,
   Divider,
   Link,
+  Snackbar,
 } from '@mui/material';
 
 import { makeStyles } from '@mui/styles';
@@ -19,6 +20,7 @@ import { Box, Theme } from '@mui/system';
 import { login, signUp } from 'context/api-helper';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
@@ -89,6 +91,12 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: '50px',
   },
 }));
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref
+) {
+  return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />;
+});
 const Signup = () => {
   const classes = useStyles();
   const theme = useTheme();
@@ -98,6 +106,8 @@ const Signup = () => {
   const [mailText, setMailText] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [message, setMassage] = React.useState('');
 
   const emailRegex = /\S+@\S+\.\S+/;
 
@@ -128,9 +138,17 @@ const Signup = () => {
     });
     console.log({ data });
 
-    const sendtData = await signUp(data.get('mailText'), password);
+    const sendtData = await signUp(data.get('mailText'), password).catch(
+      (error) => {
+        setMassage(error.message);
+        setOpen(true);
+        console.log(error.message);
+        setLoading(false);
+      }
+    );
     console.log({ sendtData });
     if (sendtData.jwt) {
+      setOpen(false);
       login(sendtData.jwt, sendtData.user.username);
       setLoading(false);
       localStorage.setItem('token', sendtData.jwt);
@@ -222,17 +240,18 @@ const Signup = () => {
 
                 <Grid item>
                   <Typography sx={{ fontSize: '12px' }}>
-                    By signing up, you confirm that you've read and <br />{' '}
-                    accepted our{' '}
-                    <span style={{ color: '#0052CC' }}>
-                      {' '}
-                      <Link href='#'>Terms of Service</Link>{' '}
-                    </span>{' '}
-                    and
-                    <span style={{ color: '#0052CC' }}>
-                      {' '}
-                      <Link href='#'> Privacy Policy.</Link>{' '}
-                    </span>
+                    By signing up, you confirm that you've read and <br />
+                    accepted our
+                    {['Terms of Service', ' and ', 'Privacy Policy'].map(
+                      (text, index) =>
+                        index === 1 ? (
+                          text
+                        ) : (
+                          <span style={{ color: '#0052CC' }}>
+                            <Link href='#'>{text}</Link>
+                          </span>
+                        )
+                    )}
                   </Typography>
                 </Grid>
 
@@ -251,6 +270,13 @@ const Signup = () => {
                   >
                     {loading ? <CircularProgress /> : 'Continue'}
                   </Button>
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={() => setOpen(false)}
+                  >
+                    <Alert severity='error'>{message}</Alert>
+                  </Snackbar>
                 </Grid>
               </Box>
 
@@ -262,7 +288,7 @@ const Signup = () => {
                   alignItems='center'
                   spacing={2}
                 >
-                  <Grid>
+                  <Grid item>
                     <Typography
                       variant='h6'
                       sx={{ color: '#4D4D4D', margin: '1rem' }}

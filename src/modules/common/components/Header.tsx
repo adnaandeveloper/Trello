@@ -8,6 +8,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import HeaderInput from './HeaderInput';
 import TrelloLogo from './TrelloLogo';
 import CustomizeAvatar from './CustomizeAvatar';
+import CreateButton from './CreateButton';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -35,7 +36,7 @@ const menuListRigt = [
     content: 'Templates',
   },
   {
-    content: 'Create',
+    content: <CreateButton />,
   },
 ];
 
@@ -58,6 +59,10 @@ type Props = {
 
 const Header = ({ main, light, dark }: Props) => {
   const classes = useStyles();
+
+  const createHandler = (content: string | JSX.Element) => {
+    if (content === 'Create') console.log(content);
+  };
   return (
     <>
       <AppBar
@@ -71,7 +76,9 @@ const Header = ({ main, light, dark }: Props) => {
               <Grid item container alignItems='center' spacing={1}>
                 {menuListRigt.map((content, index) => (
                   <Grid item key={index}>
+                    {index === 1 && content.content}
                     <Button
+                      onClick={() => createHandler(content.content)}
                       sx={{
                         paddin: '0 12px',
                         height: '32px',

@@ -6,6 +6,12 @@ export const login = async (identifier: string, password: string) => {
     },
     body: JSON.stringify({ identifier, password }),
   });
+  // console.log(response);
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+
   const data = await response.json();
   return data;
 };
@@ -40,6 +46,10 @@ export const signUp = async (
       }),
     }
   );
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
   const data = await response.json();
   return data;
 };
