@@ -2,8 +2,9 @@ import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
 import React, { useState } from 'react';
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, Grid, TextField, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { createBoar } from 'context/api-helper';
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 export interface Props {
   open: boolean;
@@ -22,8 +23,19 @@ function HeaderCreateDialog(props: Props) {
     onClose(selectedValue);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const createdBoardsData = await createBoar(name, description).catch(
+      (error) => {
+        console.log(error.message);
+      }
+    );
+    if (createdBoardsData) {
+      console.log(' is the board created? i dont know see ');
+      console.log({ createdBoardsData });
+    }
+
     console.log(name);
     console.log(description);
     setDescription('');
@@ -32,6 +44,7 @@ function HeaderCreateDialog(props: Props) {
   const handleChangeTitle = (event: any) => {
     setName(event.target.value);
   };
+
   const handleChangeDescription = (event: any) => {
     setDescription(event.target.value);
   };
@@ -55,7 +68,7 @@ function HeaderCreateDialog(props: Props) {
     >
       <DialogTitle>
         <Grid container justifyContent='space-between'>
-          <Grid item>Crearte board </Grid>
+          <Grid item>Create board </Grid>
           <Grid item>
             <CloseIcon
               onClick={handleClose}
@@ -72,26 +85,23 @@ function HeaderCreateDialog(props: Props) {
           </Grid>
         </Grid>
       </DialogTitle>
+      <Divider variant='middle' />
       <Box
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
         component='form'
-        sx={{
-          '& .MuiTextField-root': { m: 1, width: '25ch' },
-        }}
         noValidate
         autoComplete='off'
+        m={1}
       >
-        <Grid
-          container
-          direction='column'
-          justifyContent='space-between'
-          alignItems='center'
-        >
+        <Grid container direction='column'>
           <Grid item>
             <Grid container direction='column'>
-              <Grid item>Title</Grid>
-              <Grid item>
+              <Grid item ml={1}>
+                Title
+              </Grid>
+              <Grid item mt={2} mb={2}>
                 <TextField
+                  fullWidth
                   id='name'
                   value={name}
                   onChange={handleChangeTitle}
@@ -103,13 +113,16 @@ function HeaderCreateDialog(props: Props) {
                   }}
                 />
               </Grid>
-              <Grid item>description</Grid>
-              <Grid item mb={5}>
+              <Grid item ml={1}>
+                Description
+              </Grid>
+              <Grid item mt={2}>
                 <TextField
+                  fullWidth
                   onChange={handleChangeDescription}
                   name={description}
                   id='description'
-                  multiline
+                  multiline={false}
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       height: '150px',
@@ -126,9 +139,15 @@ function HeaderCreateDialog(props: Props) {
             </Grid>
           </Grid>
 
-          <Grid item mb={2}>
-            <Grid container direction='row' spacing={1}>
-              <Grid item ml={20}>
+          <Grid item mb={2} mt={2}>
+            <Grid
+              container
+              direction='row'
+              spacing={1}
+              justifyContent='space-between'
+              mr={1}
+            >
+              <Grid item>
                 <Button
                   onClick={handleClose}
                   variant='outlined'
@@ -141,8 +160,8 @@ function HeaderCreateDialog(props: Props) {
                 <Button
                   onClick={handleClose}
                   type='submit'
-                  variant='outlined'
-                  sx={{ color: 'black' }}
+                  variant='contained'
+                  sx={{ color: 'white' }}
                 >
                   Submit
                 </Button>

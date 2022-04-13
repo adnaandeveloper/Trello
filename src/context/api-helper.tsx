@@ -53,3 +53,26 @@ export const signUp = async (
   const data = await response.json();
   return data;
 };
+
+export const createBoar = async (
+  identifier: FormDataEntryValue | null,
+  description: FormDataEntryValue | null
+) => {
+  const response = await fetch('https://tamalo.herokuapp.com/boards', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: identifier,
+      description,
+      identifier,
+    }),
+  });
+  if (!response.ok) {
+    const message = `An error has occured: ${response.status}`;
+    throw new Error(message);
+  }
+  const data = await response.json();
+  return data;
+};
