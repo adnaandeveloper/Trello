@@ -1,109 +1,10 @@
 import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
-import { blue } from '@mui/material/colors';
-import React, { useContext, useEffect, useState } from 'react';
-import { Avatar, Box, Grid, TextField } from '@mui/material';
-import { AuthContext } from 'context/api-context';
-import { SocialDistanceOutlined } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { Box, Grid, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Divider from '@mui/material/Divider';
-import ListItemButton from '@mui/material/ListItemButton';
-import { useNavigate } from 'react-router-dom';
-
 const emails = ['username@gmail.com', 'user02@gmail.com'];
-
-const dialogList = [
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Add another account' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: <Divider variant='middle' />,
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Profile and visibility' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Activity' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Cards' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Settings' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: <Divider variant='middle' />,
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Helps' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Shortcuts' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-  {
-    content: <Divider variant='middle' />,
-  },
-  {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='log out' />
-        </ListItem>
-      </ListItemButton>
-    ),
-  },
-];
-
 export interface Props {
   open: boolean;
   selectedValue: string;
@@ -113,6 +14,7 @@ export interface Props {
 
 function HeaderCreateDialog(props: Props) {
   const [name, setName] = React.useState('');
+  const [description, setDescription] = React.useState('');
 
   const { onClose, selectedValue, open } = props;
 
@@ -120,10 +22,19 @@ function HeaderCreateDialog(props: Props) {
     onClose(selectedValue);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(name);
+    console.log(description);
+    setDescription('');
+    setName('');
+  };
+  const handleChangeTitle = (event: any) => {
     setName(event.target.value);
   };
-
+  const handleChangeDescription = (event: any) => {
+    setDescription(event.target.value);
+  };
   return (
     <Dialog
       onClose={handleClose}
@@ -162,6 +73,7 @@ function HeaderCreateDialog(props: Props) {
         </Grid>
       </DialogTitle>
       <Box
+        onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}
         component='form'
         sx={{
           '& .MuiTextField-root': { m: 1, width: '25ch' },
@@ -180,9 +92,9 @@ function HeaderCreateDialog(props: Props) {
               <Grid item>Title</Grid>
               <Grid item>
                 <TextField
-                  id='outlined-name'
+                  id='name'
                   value={name}
-                  onChange={handleChange}
+                  onChange={handleChangeTitle}
                   size='small'
                   sx={{
                     '& .MuiOutlinedInput-notchedOutline legend': {
@@ -191,16 +103,17 @@ function HeaderCreateDialog(props: Props) {
                   }}
                 />
               </Grid>
-              <Grid item>descriobtion</Grid>
+              <Grid item>description</Grid>
               <Grid item mb={5}>
                 <TextField
-                  id='outlined-uncontrolled'
+                  onChange={handleChangeDescription}
+                  name={description}
+                  id='description'
                   multiline
                   sx={{
                     '& .MuiOutlinedInput-root': {
                       height: '150px',
                     },
-
                     '& .MuiOutlinedInput-notchedOutline legend': {
                       display: 'none',
                     },
@@ -221,11 +134,16 @@ function HeaderCreateDialog(props: Props) {
                   variant='outlined'
                   sx={{ color: 'black' }}
                 >
-                  Center
+                  cencel
                 </Button>
               </Grid>
               <Grid item>
-                <Button variant='outlined' sx={{ color: 'black' }}>
+                <Button
+                  onClick={handleClose}
+                  type='submit'
+                  variant='outlined'
+                  sx={{ color: 'black' }}
+                >
                   Submit
                 </Button>
               </Grid>

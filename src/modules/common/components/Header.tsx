@@ -76,7 +76,6 @@ const Header = ({ main, light, dark }: Props) => {
               <Grid item container alignItems='center' spacing={1}>
                 {menuListRigt.map((content, index) => (
                   <Grid item key={index}>
-                    {index === 1 && content.content}
                     <Button
                       onClick={() => createHandler(content.content)}
                       sx={{
