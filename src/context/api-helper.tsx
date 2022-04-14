@@ -25,6 +25,7 @@ export const isLogedIn = async () => {
     },
   });
   const data = await response.json();
+
   return data;
 };
 
@@ -64,9 +65,8 @@ export const createBoar = async (
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: identifier,
-      description,
       identifier,
+      description,
     }),
   });
   if (!response.ok) {

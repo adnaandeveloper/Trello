@@ -116,6 +116,8 @@ const App: React.FC = () => {
       } else {
         const data = await isLogedIn();
         if (data) {
+          console.log('this is the logged in users data');
+          console.log(data.username);
           navigate('boards');
         } else {
           navigate('login');
@@ -130,7 +132,6 @@ const App: React.FC = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <Routes>
-            <Route path='/' element={<App />} />
             <Route path='login' element={<Login />} />
             <Route path='boards' element={<Boards />} />
             <Route path='signup' element={<Signup />} />
