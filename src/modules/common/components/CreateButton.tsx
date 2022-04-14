@@ -1,10 +1,11 @@
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Grid, TextField, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { createBoar } from 'context/api-helper';
+import { AuthContext } from 'context/api-context';
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 export interface Props {
   open: boolean;
@@ -16,6 +17,7 @@ export interface Props {
 function HeaderCreateDialog(props: Props) {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const { userId } = useContext(AuthContext);
 
   const { onClose, selectedValue, open } = props;
 
@@ -26,7 +28,7 @@ function HeaderCreateDialog(props: Props) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const createdBoardsData = await createBoar(name, description).catch(
+    const createdBoardsData = await createBoar(name, description, userId).catch(
       (error) => {
         console.log(error.message);
       }
@@ -96,25 +98,15 @@ function HeaderCreateDialog(props: Props) {
         <Grid container direction='column'>
           <Grid item>
             <Grid container direction='column'>
-              <Grid item ml={1}>
-                Title
-              </Grid>
               <Grid item mt={2} mb={2}>
                 <TextField
+                  label='Title'
                   fullWidth
                   id='name'
                   value={name}
                   onChange={handleChangeTitle}
                   size='small'
-                  sx={{
-                    '& .MuiOutlinedInput-notchedOutline legend': {
-                      display: 'none',
-                    },
-                  }}
                 />
-              </Grid>
-              <Grid item ml={1}>
-                Description
               </Grid>
               <Grid item mt={2}>
                 <TextField
@@ -122,18 +114,10 @@ function HeaderCreateDialog(props: Props) {
                   onChange={handleChangeDescription}
                   name={description}
                   id='description'
-                  multiline={false}
-                  sx={{
-                    '& .MuiOutlinedInput-root': {
-                      height: '150px',
-                    },
-                    '& .MuiOutlinedInput-notchedOutline legend': {
-                      display: 'none',
-                    },
-                    '& .MuiFormControl-root': {
-                      width: '311px',
-                    },
-                  }}
+                  maxRows={6}
+                  rows={4}
+                  multiline
+                  label='Description'
                 />
               </Grid>
             </Grid>

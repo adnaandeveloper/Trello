@@ -57,16 +57,19 @@ export const signUp = async (
 
 export const createBoar = async (
   identifier: FormDataEntryValue | null,
-  description: FormDataEntryValue | null
+  description: FormDataEntryValue | null,
+  userName: FormDataEntryValue | null
 ) => {
   const response = await fetch('https://tamalo.herokuapp.com/boards', {
     method: 'POST',
     headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      identifier,
+      title: identifier,
       description,
+      userName,
     }),
   });
   if (!response.ok) {

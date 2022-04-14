@@ -5,7 +5,14 @@ export interface IAuth {
   userName: string;
   logIn: (token: string, userName: string) => void;
   logOut: () => void;
+  saveUserCridentials: (
+    userName: string,
+    userId: string,
+    userEmail: string
+  ) => void;
   token: string;
+  userId: string;
+  userEmail: string;
 }
 
 export const AuthContext = React.createContext<IAuth>(null as unknown as IAuth);
@@ -26,6 +33,8 @@ export const AuthProvider: FC = ({ children }) => {
     loggedIn: false,
     userName: '',
     token: '',
+    userId: '',
+    userEmail: '',
   });
 
   const logIn = (token: string, userName: string) => {
@@ -43,9 +52,25 @@ export const AuthProvider: FC = ({ children }) => {
       loggedIn: false,
       token: '',
       userName: '',
+      userId: '',
+      userEmail: '',
     }));
     //localStorage.setItem('token', '');
     localStorage.removeItem('token');
+  };
+
+  const saveUserCridentials = (
+    userName: string,
+    userId: string,
+    userEmail: string
+  ) => {
+    setAuth((prevState) => ({
+      ...prevState,
+      loggedIn: true,
+      userName: userName,
+      userId: userId,
+      userEmail: userEmail,
+    }));
   };
 
   return (
@@ -57,6 +82,7 @@ export const AuthProvider: FC = ({ children }) => {
         ...auth,
         logIn,
         logOut,
+        saveUserCridentials,
       }}
     >
       {children}

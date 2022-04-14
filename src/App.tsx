@@ -12,7 +12,7 @@ import { Author, Quote, QuoteMap } from 'assets/types';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthContext } from 'context/api-context';
-import { isLogedIn } from 'context/api-helper';
+import { isLogedIn, login } from 'context/api-helper';
 
 declare module '@mui/material/styles/' {
   export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
@@ -59,8 +59,7 @@ const theme = createTheme({
 const queryClient = new QueryClient();
 
 const App: React.FC = () => {
-  const { loggedIn, token } = useContext(AuthContext);
-  console.log('hvad er i token mon? ' + token);
+  const { loggedIn, saveUserCridentials } = useContext(AuthContext);
 
   const [allAuthors] = useState(getAllAuthors());
   const [listIsAddeable, setListIsAddeable] = useState(false);
@@ -109,6 +108,7 @@ const App: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(' what is state of the user brother?' + loggedIn);
     const authirise = async () => {
       if (!localStorage.getItem('token')) {
         console.log('token is ' + localStorage.getItem('token'));
@@ -116,8 +116,10 @@ const App: React.FC = () => {
       } else {
         const data = await isLogedIn();
         if (data) {
-          console.log('this is the logged in users data');
-          console.log(data.username);
+          console.log({ data });
+          saveUserCridentials(data.username, data.id, data.email);
+          console.log(' what is state of the user brother?' + loggedIn);
+
           navigate('boards');
         } else {
           navigate('login');
