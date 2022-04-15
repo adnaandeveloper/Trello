@@ -69,7 +69,7 @@ export const createBoar = async (
     body: JSON.stringify({
       title: identifier,
       description,
-      userName,
+      owners: [userName],
     }),
   });
   if (!response.ok) {
@@ -78,4 +78,16 @@ export const createBoar = async (
   }
   const data = await response.json();
   return data;
+};
+
+export const getBoards = async () => {
+  const response = await fetch('https://tamalo.herokuapp.com/boards', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  return response.json();
 };

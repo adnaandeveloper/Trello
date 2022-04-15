@@ -10,9 +10,8 @@ import './index.css';
 import { getAllAuthors, addAuthor, quotes, addOneQuote } from './assets/data';
 import { Author, Quote, QuoteMap } from 'assets/types';
 
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { AuthContext } from 'context/api-context';
-import { isLogedIn, login } from 'context/api-helper';
+import { isLogedIn } from 'context/api-helper';
 
 declare module '@mui/material/styles/' {
   export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
@@ -55,8 +54,6 @@ const theme = createTheme({
     },
   },
 });
-
-const queryClient = new QueryClient();
 
 const App: React.FC = () => {
   const { loggedIn, saveUserCridentials } = useContext(AuthContext);
@@ -109,16 +106,15 @@ const App: React.FC = () => {
 
   useEffect(() => {
     console.log(' what is state of the user brother?' + loggedIn);
+
     const authirise = async () => {
       if (!localStorage.getItem('token')) {
-        console.log('token is ' + localStorage.getItem('token'));
         navigate('login');
       } else {
         const data = await isLogedIn();
         if (data) {
           console.log({ data });
           saveUserCridentials(data.username, data.id, data.email);
-          console.log(' what is state of the user brother?' + loggedIn);
 
           navigate('boards');
         } else {
@@ -131,33 +127,31 @@ const App: React.FC = () => {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path='login' element={<Login />} />
-            <Route path='boards' element={<Boards />} />
-            <Route path='signup' element={<Signup />} />
-            <Route
-              path='board/:id'
-              element={
-                <Board
-                  initial={authorQuoteMap}
-                  isCombineEnabled
-                  onClickHandler={onClickHandler}
-                  listIsAddeable={listIsAddeable}
-                  onChangHanlerAddAuthor={onChangHanlerAddAuthor}
-                  AddNewAotuhersToTheAuthors={AddNewAotuhersToTheAuthors}
-                  authorName={authorName}
-                  addQuote={addQuote}
-                  addQuoteName={addQuoteName}
-                  withScrollableColumns
-                />
-              }
-            />
-            <Route path='user/:id' element={<User />} />
-          </Routes>
-        </ThemeProvider>
-      </QueryClientProvider>
+      <ThemeProvider theme={theme}>
+        <Routes>
+          <Route path='login' element={<Login />} />
+          <Route path='boards' element={<Boards />} />
+          <Route path='signup' element={<Signup />} />
+          <Route
+            path='board/:id'
+            element={
+              <Board
+                initial={authorQuoteMap}
+                isCombineEnabled
+                onClickHandler={onClickHandler}
+                listIsAddeable={listIsAddeable}
+                onChangHanlerAddAuthor={onChangHanlerAddAuthor}
+                AddNewAotuhersToTheAuthors={AddNewAotuhersToTheAuthors}
+                authorName={authorName}
+                addQuote={addQuote}
+                addQuoteName={addQuoteName}
+                withScrollableColumns
+              />
+            }
+          />
+          <Route path='user/:id' element={<User />} />
+        </Routes>
+      </ThemeProvider>
     </>
   );
 };

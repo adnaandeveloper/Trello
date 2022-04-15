@@ -5,17 +5,18 @@ import CardContent from '@mui/material/CardContent';
 import { Typography } from '@mui/material/';
 
 interface Props {
-  color: string;
+  title: string;
+  description: string;
 }
 
-const BoardCard: React.FC<Props> = ({ color }) => {
+const BoardCard: React.FC<Props> = ({ title, description }) => {
   return (
     <div>
       <Card
         sx={{
           width: '12rem ',
           height: '96px',
-          backgroundColor: color,
+          backgroundColor: 'green',
         }}
       >
         <CardContent>
@@ -34,7 +35,7 @@ const BoardCard: React.FC<Props> = ({ color }) => {
               textTransform: 'none',
             }}
           >
-            Template
+            {title}
           </Button>
 
           <Typography
@@ -47,7 +48,7 @@ const BoardCard: React.FC<Props> = ({ color }) => {
               textTransform: 'none',
             }}
           >
-            Project management
+            {description}
           </Typography>
         </CardContent>
       </Card>

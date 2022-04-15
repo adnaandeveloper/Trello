@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from './../../common/components/Header';
 import {
   Container,
@@ -18,6 +18,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import BoardsRightMenu from './BoardsRightMenu';
 import CloseButton from 'modules/common/components/CloseButton';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { getBoards } from 'context/api-helper';
+import { AuthContext } from 'context/api-context';
+
+import { useState } from '@storybook/addons';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftBox: {
@@ -64,13 +69,27 @@ const textUnderPersonalBoards = [
 ];
 
 const Boards = () => {
+  const { userId } = useContext(AuthContext);
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
-  const title = 'Most popular templates';
+  const title = 'My boards';
   const underTitleText =
     'Get going faster with a template from the Trello community or';
+
+  const { data, error, isError, isLoading } = useQuery('data', getBoards);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error! {error}</div>;
+  }
+
+  const myBoards = data.filter((item: { owners: string }) =>
+    item.owners.includes(userId)
+  );
+  console.log(myBoards);
 
   return (
     <div>
@@ -116,17 +135,6 @@ const Boards = () => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              item
-              sx={{
-                marginBottom: '20px',
-                color: '#5E6C84',
-                fontSize: '14px',
-                marginLeft: '10px',
-              }}
-            >
-              {underTitleText}
-            </Grid>
 
             <Grid item xs={12} md={12}>
               <Grid
@@ -136,20 +144,16 @@ const Boards = () => {
                 spacing={1}
                 sx={{ marginBottom: '10px' }}
               >
-                {['red', 'blue', 'orange', 'black'].map((color, index) => (
+                {myBoards.map((item: any, index: number) => (
                   <Grid item key={index}>
                     <Button>
-                      <BoardCard color={color} />
+                      <BoardCard
+                        title={item.title}
+                        description={item.description}
+                      />
                     </Button>
                   </Grid>
                 ))}
-              </Grid>
-              <Grid item sx={{ marginBottom: '50px', marginLeft: '10px' }}>
-                <Link href='#'>
-                  <Typography sx={{ color: '#6B808C', fontSize: '14px' }}>
-                    Browse the full template gallery
-                  </Typography>
-                </Link>
               </Grid>
               <Grid>
                 <Grid item container spacing={2}>
@@ -164,7 +168,7 @@ const Boards = () => {
                       }}
                     >
                       {' '}
-                      Recently viewed{' '}
+                      Member of
                     </Typography>
                   </Grid>
                 </Grid>
@@ -172,34 +176,8 @@ const Boards = () => {
 
               <Grid item sx={{ marginBottom: '40px' }}>
                 <Button onClick={() => navigate('/board/1')}>
-                  <BoardCard color='red' />
+                  <BoardCard title='no title' description='comming soon' />
                 </Button>
-              </Grid>
-
-              <Grid>
-                <Grid item container spacing={2}>
-                  <Grid item sx={{ marginLeft: '7px' }}>
-                    <AccessTimeIcon />
-                  </Grid>
-                  <Grid item>
-                    <Typography
-                      sx={{
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      Personal boards
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-
-              <Grid item sx={{ marginBottom: '40px' }}>
-                {['red', 'orange'].map((color) => (
-                  <Button>
-                    <BoardCard color={color} />
-                  </Button>
-                ))}
               </Grid>
 
               {textUnderPersonalBoards.map((title, index) => (
