@@ -21,6 +21,7 @@ import { login, signUp } from 'context/api-helper';
 import { useNavigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginPage: {
@@ -256,7 +257,8 @@ const Signup = () => {
                 </Grid>
 
                 <Grid item mt={2}>
-                  <Button
+                  <LoadingButton
+                    loading={loading}
                     type='submit'
                     disabled={!mailAccept}
                     className={classes.ButtonsInLoginBox}
@@ -268,8 +270,8 @@ const Signup = () => {
                       },
                     }}
                   >
-                    {loading ? <CircularProgress /> : 'Continue'}
-                  </Button>
+                    Continue
+                  </LoadingButton>
                   <Snackbar
                     open={open}
                     autoHideDuration={6000}

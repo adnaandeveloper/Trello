@@ -6,7 +6,10 @@ import { Box, Grid, TextField, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { createBoar } from 'context/api-helper';
 import { AuthContext } from 'context/api-context';
+import CircularProgress from '@mui/material/CircularProgress';
+import LoadingButton from '@mui/lab/LoadingButton';
 const emails = ['username@gmail.com', 'user02@gmail.com'];
+
 export interface Props {
   open: boolean;
   selectedValue: string;
@@ -18,24 +21,23 @@ function HeaderCreateDialog(props: Props) {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const { userId } = useContext(AuthContext);
+  const [loading, setLoading] = React.useState(false);
 
   const { onClose, selectedValue, open } = props;
 
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
+    setLoading(true);
     const createdBoardsData = await createBoar(name, description, userId).catch(
       (error) => {
         console.log(error.message);
       }
     );
     if (createdBoardsData) {
+      setLoading(false);
       console.log(' is the board created? i dont know see ');
       console.log({ createdBoardsData });
+      onClose(selectedValue);
     }
 
     console.log(name);
@@ -43,6 +45,11 @@ function HeaderCreateDialog(props: Props) {
     setDescription('');
     setName('');
   };
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
   const handleChangeTitle = (event: any) => {
     setName(event.target.value);
   };
@@ -141,14 +148,14 @@ function HeaderCreateDialog(props: Props) {
                 </Button>
               </Grid>
               <Grid item>
-                <Button
-                  onClick={handleClose}
+                <LoadingButton
+                  loading={loading}
                   type='submit'
                   variant='contained'
                   sx={{ color: 'white' }}
                 >
                   Submit
-                </Button>
+                </LoadingButton>
               </Grid>
             </Grid>
           </Grid>

@@ -14,6 +14,7 @@ import {
 import CircularProgress from '@mui/material/CircularProgress';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { makeStyles } from '@mui/styles';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import rigtPic from './../../../assets/right.svg';
 import lefPic from './../../../assets/left.svg';
@@ -206,7 +207,8 @@ const Login = () => {
                 </Grid>
 
                 <Grid item>
-                  <Button
+                  <LoadingButton
+                    loading={loading}
                     type='submit'
                     className={classes.ButtonsInLoginBox}
                     sx={{
@@ -217,8 +219,8 @@ const Login = () => {
                       },
                     }}
                   >
-                    {loading ? <CircularProgress /> : 'login in'}
-                  </Button>
+                    login in
+                  </LoadingButton>
                 </Grid>
               </Box>
               <Grid>

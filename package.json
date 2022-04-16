@@ -6,7 +6,9 @@
     "@atlaskit/theme": "^12.1.5",
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "@material-ui/lab": "^4.0.0-alpha.61",
     "@mui/icons-material": "^5.5.0",
+    "@mui/lab": "^5.0.0-alpha.77",
     "@mui/material": "^5.5.0",
     "@mui/styles": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
@@ -27,7 +29,7 @@
     "react-query": "^3.34.19",
     "react-router-dom": "^6.2.2",
     "react-scripts": "^5.0.0",
-    "typescript": "^4.6.2",
+    "typescript": "^4.6.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -85,6 +87,7 @@
     "@storybook/react": "^6.1.21",
     "@storybook/testing-library": "^0.0.9",
     "@types/react-beautiful-dnd": "^13.1.2",
+    "@typescript-eslint/parser": "^5.19.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.3.5",

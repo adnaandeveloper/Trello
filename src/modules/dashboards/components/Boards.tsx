@@ -21,8 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getBoards } from 'context/api-helper';
 import { AuthContext } from 'context/api-context';
-
-import { useState } from '@storybook/addons';
+import BoardItem from './BoardItem';
 
 const useStyles = makeStyles((theme: Theme) => ({
   leftBox: {
@@ -78,19 +77,6 @@ const Boards = () => {
   const underTitleText =
     'Get going faster with a template from the Trello community or';
 
-  const { data, error, isError, isLoading } = useQuery('data', getBoards);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-  if (isError) {
-    return <div>Error! {error}</div>;
-  }
-
-  const myBoards = data.filter((item: { owners: string }) =>
-    item.owners.includes(userId)
-  );
-  console.log(myBoards);
-
   return (
     <div>
       <Header
@@ -137,24 +123,8 @@ const Boards = () => {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Grid
-                item
-                container
-                direction='row'
-                spacing={1}
-                sx={{ marginBottom: '10px' }}
-              >
-                {myBoards.map((item: any, index: number) => (
-                  <Grid item key={index}>
-                    <Button>
-                      <BoardCard
-                        title={item.title}
-                        description={item.description}
-                      />
-                    </Button>
-                  </Grid>
-                ))}
-              </Grid>
+              <BoardItem />
+
               <Grid>
                 <Grid item container spacing={2}>
                   <Grid item sx={{ marginLeft: '7px' }}>
