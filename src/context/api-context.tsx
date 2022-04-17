@@ -3,7 +3,7 @@ import React, { useState, FC, useRef, useEffect } from 'react';
 export interface IAuth {
   loggedIn: boolean;
   userName: string;
-  logIn: (token: string, userName: string) => void;
+  logIn: (token: string, userName: string, userId: string) => void;
   logOut: () => void;
   saveUserCridentials: (
     userName: string,
@@ -37,9 +37,10 @@ export const AuthProvider: FC = ({ children }) => {
     userEmail: '',
   });
 
-  const logIn = (token: string, userName: string) => {
+  const logIn = (token: string, userName: string, userId: string) => {
     setAuth((prevState) => ({
       ...prevState,
+      userId: userId,
       loggedIn: true,
       token: token,
       userName: userName,

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from './../../common/components/Header';
 import {
   Container,
@@ -69,6 +69,7 @@ const textUnderPersonalBoards = [
 
 const Boards = () => {
   const { userId } = useContext(AuthContext);
+
   const classes = useStyles();
   const navigate = useNavigate();
   const theme = useTheme();
@@ -76,6 +77,13 @@ const Boards = () => {
   const title = 'My boards';
   const underTitleText =
     'Get going faster with a template from the Trello community or';
+  const { data, error, isError, isLoading } = useQuery('data', getBoards);
+
+  console.log({ data, userId });
+
+  const myBoards =
+    data?.filter((item: { owners: string }) => item.owners.includes(userId)) ||
+    [];
 
   return (
     <div>
@@ -123,7 +131,12 @@ const Boards = () => {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <BoardItem />
+              <BoardItem
+                error={error}
+                isError={isError}
+                isLoading={isLoading}
+                myBoards={myBoards}
+              />
 
               <Grid>
                 <Grid item container spacing={2}>

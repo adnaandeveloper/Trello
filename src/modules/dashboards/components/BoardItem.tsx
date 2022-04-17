@@ -2,23 +2,36 @@ import { Button, Grid } from '@mui/material';
 import BoardCard from 'components/ui/BoardCard';
 import { AuthContext } from 'context/api-context';
 import { getBoards } from 'context/api-helper';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const BoardItem = () => {
-  const { userId } = useContext(AuthContext);
-  const { data, error, isError, isLoading } = useQuery('data', getBoards);
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
+function Variants() {
+  return (
+    <Stack spacing={1} direction='row'>
+      {[1, 2, 3, 4].map((skel, index) => (
+        <Skeleton key={index} variant='rectangular' width={210} height={118} />
+      ))}
+    </Stack>
+  );
+}
+
+type Props = {
+  error: unknown;
+  isError: boolean;
+  isLoading: boolean;
+  myBoards: never[];
+};
+const BoardItem = ({ error, isError, isLoading, myBoards }: Props) => {
   if (isLoading) {
     <CircularProgress />;
   }
   if (isError) {
     return <div>Error! {error}</div>;
   }
-  const myBoards =
-    data?.filter((item: { owners: string }) => item.owners.includes(userId)) ||
-    [];
 
   return (
     <Grid
@@ -28,7 +41,7 @@ const BoardItem = () => {
       spacing={1}
       sx={{ marginBottom: '10px' }}
     >
-      {isLoading && <CircularProgress />}
+      {isLoading && <Variants />}
 
       {myBoards.map((item: any, index: number) => (
         <Grid item key={index}>

@@ -88,6 +88,5 @@ export const getBoards = async () => {
       'Content-Type': 'application/json',
     },
   });
-
   return response.json();
 };

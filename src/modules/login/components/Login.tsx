@@ -116,8 +116,9 @@ const Login = () => {
       setLoading(false);
     });
     if (sendtData.jwt) {
+      console.log(sendtData.user.id);
       setOpen(false);
-      logIn(sendtData.jwt, sendtData.user.firstName);
+      logIn(sendtData.jwt, sendtData.user.firstName, sendtData.user.id);
       setLoading(false);
       localStorage.setItem('token', sendtData.jwt);
       localStorage.setItem('userName', sendtData.user.username);

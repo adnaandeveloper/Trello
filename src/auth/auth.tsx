@@ -9,7 +9,7 @@ const navigate = useNavigate();
 export const authLogin = async (email: string, password: string) => {
   const sendtData = await login(email, password);
   if (sendtData.jwt) {
-    logIn(sendtData.jwt, sendtData.user.firstName);
+    logIn(sendtData.jwt, sendtData.user.firstName, sendtData.user.id);
 
     localStorage.setItem('token', sendtData.jwt);
     localStorage.setItem('userName', sendtData.user.firstName);
