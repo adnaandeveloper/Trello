@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Board from './modules/dashboard/components/Board';
 import Boards from './modules/dashboards/components/Boards';
 import Signup from 'modules/signup/components/Signup';
-import User from './modules/user/components/User';
+import Users from './modules/users/components/Users';
 import Login from './modules/login/components/Login';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './index.css';
@@ -149,7 +149,7 @@ const App: React.FC = () => {
               />
             }
           />
-          <Route path='user/:id' element={<User />} />
+          <Route path='users/:id' element={<Users />} />
         </Routes>
       </ThemeProvider>
     </>

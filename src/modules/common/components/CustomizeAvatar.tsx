@@ -161,6 +161,17 @@ function HeaderAvatarDialog(props: Props) {
       };
   }
 
+  const onClickHandler = (event: string) => {
+    switch (event) {
+      case '10':
+        handlerLogout();
+        break;
+      case '2':
+        navigate('/users/1');
+        break;
+    }
+  };
+
   return (
     <Dialog
       onClose={handleClose}
@@ -251,11 +262,7 @@ function HeaderAvatarDialog(props: Props) {
       <Box sx={{ m: 1 }}>
         <List sx={{ '& .MuiListItemButton-root': { padding: '0' } }}>
           {dialogList.map((item, index, array) => (
-            <div
-              onClick={() =>
-                index === array.length - 1 ? handlerLogout() : ''
-              }
-            >
+            <div onClick={() => onClickHandler(index.toString())}>
               {item.content}
             </div>
           ))}
