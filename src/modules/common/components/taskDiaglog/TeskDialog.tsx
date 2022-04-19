@@ -35,17 +35,6 @@ export const TeskDialog = (props: Props) => {
       PaperProps={{
         sx: { height: '100%', mt: 10, backgroundColor: '#f4f5f7' },
       }}
-    >
-      <DialogTitle>
-        <HeaderForDiaglog
-          tasktName={taskTitle}
-          listName={listName}
-          handleClose={handleClose}
-          icon={<ChromeReaderModeIcon />}
-        />
-      </DialogTitle>
-      <Members />
-      <Description />
-    </Dialog>
+    ></Dialog>
   );
 };

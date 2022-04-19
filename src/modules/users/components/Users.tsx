@@ -31,7 +31,6 @@ export default function Users() {
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
-   
   };
 
   function stringToColor(value: string | null) {

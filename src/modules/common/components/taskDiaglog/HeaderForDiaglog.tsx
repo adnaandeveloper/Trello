@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import {
   Button,
   Grid,
@@ -13,20 +13,24 @@ import Avatar from '@mui/material/Avatar';
 import AddIcon from '@mui/icons-material/Add';
 import OnOutsiceClick from 'react-outclick';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from 'context/api-context';
 type Props = {
   tasktName: string;
   listName: string;
-  handleClose: () => void;
   icon: ReactElement<any, any>;
+  onClose: () => void;
 };
 
-const HeaderForDiaglog = ({
-  tasktName,
-  listName,
-  handleClose,
-  icon,
-}: Props) => {
+const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
   const [toggletextField, setToggletextFeild] = useState(false);
+  const {
+    taskDiaglogOpen,
+    setTaskListNameAndTasleTitleName,
+    taskeTitleName,
+    taskListName,
+  } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [textarea, setTextarea] = useState(false);
   const handleTexfField = () => {
     console.log('hello');
@@ -49,13 +53,13 @@ const HeaderForDiaglog = ({
                     label
                     fullWidth
                     size='small'
-                    value={tasktName}
+                    value={taskeTitleName}
                     sx={{ width: '680px', height: '29px' }}
                   ></TextField>
                 </Grid>
               ) : (
                 <Grid item onClick={() => setToggletextFeild(true)}>
-                  {tasktName}
+                  {taskeTitleName}
                 </Grid>
               )}
             </Grid>
@@ -63,7 +67,10 @@ const HeaderForDiaglog = ({
           <Grid item>
             <IconButton>
               <CloseIcon
-                onClick={() => handleClose()}
+                onClick={() => {
+                  onClose();
+                  navigate('/board/:id');
+                }}
                 sx={{ color: 'black' }}
               />
             </IconButton>
@@ -72,7 +79,7 @@ const HeaderForDiaglog = ({
       </ClickAwayListener>
 
       <Grid container justifyContent='flex-start' ml={5} mt={1}>
-        <Grid item> In list {' ' + listName}</Grid>
+        <Grid item> In list {' ' + taskListName}</Grid>
       </Grid>
     </OnOutsiceClick>
   );

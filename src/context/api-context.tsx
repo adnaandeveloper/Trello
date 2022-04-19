@@ -13,6 +13,15 @@ export interface IAuth {
   token: string;
   userId: string;
   userEmail: string;
+  taskDiaglogState: boolean;
+  taskeTitleName: string;
+  taskListName: string;
+  taskDiaglogOpen: () => void;
+  taskDiaglogClose: () => void;
+  setTaskListNameAndTasleTitleName: (
+    taskeTitleName: string,
+    taskListName: string
+  ) => void;
 }
 
 export const AuthContext = React.createContext<IAuth>(null as unknown as IAuth);
@@ -35,6 +44,9 @@ export const AuthProvider: FC = ({ children }) => {
     token: '',
     userId: '',
     userEmail: '',
+    taskDiaglogState: false,
+    taskListName: '',
+    taskeTitleName: '',
   });
 
   const logIn = (token: string, userName: string, userId: string) => {
@@ -74,6 +86,30 @@ export const AuthProvider: FC = ({ children }) => {
     }));
   };
 
+  const taskDiaglogOpen = () => {
+    setAuth((prevState) => ({
+      ...prevState,
+      taskDiaglogState: true,
+    }));
+  };
+  const taskDiaglogClose = () => {
+    setAuth((prevState) => ({
+      ...prevState,
+      taskDiaglogState: false,
+    }));
+  };
+
+  const setTaskListNameAndTasleTitleName = (
+    taskeTitleName: string,
+    taskListName: string
+  ) => {
+    setAuth((prevState) => ({
+      ...prevState,
+      taskeTitleName: taskeTitleName,
+      taskListName: taskListName,
+    }));
+  };
+
   return (
     <AuthContext.Provider
       // Here as value you need to pass the same interface as IAuth
@@ -84,6 +120,9 @@ export const AuthProvider: FC = ({ children }) => {
         logIn,
         logOut,
         saveUserCridentials,
+        taskDiaglogOpen,
+        taskDiaglogClose,
+        setTaskListNameAndTasleTitleName,
       }}
     >
       {children}

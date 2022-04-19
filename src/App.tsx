@@ -12,6 +12,9 @@ import { Author, Quote, QuoteMap } from 'assets/types';
 
 import { AuthContext } from 'context/api-context';
 import { isLogedIn } from 'context/api-helper';
+import { TeskDialog } from 'modules/common/components/taskDiaglog/TeskDialog';
+import { Dialog } from '@mui/material';
+import DialogWrapper from 'modules/common/components/taskDiaglog/DialogWrapper';
 
 declare module '@mui/material/styles/' {
   export type Breakpoint = 'xs' | 'sm' | 'md' | 'lg';
@@ -56,7 +59,8 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const { loggedIn, saveUserCridentials } = useContext(AuthContext);
+  const { loggedIn, saveUserCridentials, taskDiaglogClose, taskDiaglogState } =
+    useContext(AuthContext);
 
   const [allAuthors] = useState(getAllAuthors());
   const [listIsAddeable, setListIsAddeable] = useState(false);
@@ -103,10 +107,17 @@ const App: React.FC = () => {
     setAuthorName('');
   };
   const navigate = useNavigate();
+  const [open, setOpen] = React.useState(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value: string) => {
+    setOpen(false);
+  };
 
   useEffect(() => {
-    console.log(' what is state of the user brother?' + loggedIn);
-
     const authirise = async () => {
       if (!localStorage.getItem('token')) {
         navigate('login');
@@ -148,7 +159,28 @@ const App: React.FC = () => {
                 withScrollableColumns
               />
             }
-          />
+          >
+            <Route
+              path='users/:id'
+              element={
+                <Dialog
+                  onClose={taskDiaglogClose}
+                  open={taskDiaglogState}
+                  maxWidth='md'
+                  fullWidth
+                  PaperProps={{
+                    sx: {
+                      height: '100%',
+                      mt: 10,
+                      backgroundColor: '#f4f5f7',
+                    },
+                  }}
+                >
+                  <DialogWrapper onClose={taskDiaglogClose} />
+                </Dialog>
+              }
+            />
+          </Route>
           <Route path='users/:id' element={<Users />} />
         </Routes>
       </ThemeProvider>

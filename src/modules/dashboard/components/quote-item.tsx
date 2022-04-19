@@ -1,11 +1,14 @@
 // @flow
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { colors } from '@atlaskit/theme';
 import { borderRadius, grid } from 'modules/common/components/constants';
 import type { Quote, AuthorColors } from 'modules/common/components/types';
 import type { DraggableProvided } from 'react-beautiful-dnd';
 import { TeskDialog } from 'modules/common/components/taskDiaglog/TeskDialog';
+import { Button } from '@mui/material';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { AuthContext } from 'context/api-context';
 
 type Props = {
   quote: Quote;
@@ -177,7 +180,9 @@ function QuoteItem(props: Props) {
   const handleClose = (value: string) => {
     setOpen(false);
   };
-
+  const navigate = useNavigate();
+  const { taskDiaglogOpen, setTaskListNameAndTasleTitleName } =
+    useContext(AuthContext);
   return (
     <div>
       <Container
@@ -196,7 +201,16 @@ function QuoteItem(props: Props) {
       >
         {isClone ? <CloneBadge>Clone</CloneBadge> : null}
         <Content>
-          <BlockQuote onClick={() => handleClickOpen()}>
+          <BlockQuote
+            onClick={() => {
+              navigate('users/:id');
+              taskDiaglogOpen();
+              setTaskListNameAndTasleTitleName(
+                quote.content,
+                quote.author.name
+              );
+            }}
+          >
             {quote.content}
           </BlockQuote>
           <Footer>
@@ -204,14 +218,8 @@ function QuoteItem(props: Props) {
             <QuoteId>id:{quote.id}</QuoteId>
           </Footer>
         </Content>
+        <Outlet />
       </Container>
-      <TeskDialog
-        selectedValue=''
-        open={open}
-        onClose={handleClose}
-        taskTitle={quote.content}
-        listName={quote.author.name}
-      />
     </div>
   );
 }
