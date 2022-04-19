@@ -5,7 +5,7 @@ import { colors } from '@atlaskit/theme';
 import { borderRadius, grid } from 'modules/common/components/constants';
 import type { Quote, AuthorColors } from 'modules/common/components/types';
 import type { DraggableProvided } from 'react-beautiful-dnd';
-import { TeskDialog } from 'modules/common/components/TeskDialog';
+import { TeskDialog } from 'modules/common/components/taskDiaglog/TeskDialog';
 
 type Props = {
   quote: Quote;
@@ -205,7 +205,13 @@ function QuoteItem(props: Props) {
           </Footer>
         </Content>
       </Container>
-      <TeskDialog selectedValue='' open={open} onClose={handleClose} />
+      <TeskDialog
+        selectedValue=''
+        open={open}
+        onClose={handleClose}
+        taskTitle={quote.content}
+        listName={quote.author.name}
+      />
     </div>
   );
 }

@@ -12914,6 +12914,11 @@ react-jss@^10.5.1:
     theming "^3.3.0"
     tiny-warning "^1.0.2"
 
+react-outclick@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-outclick/-/react-outclick-0.0.4.tgz#54a6ea12bcedebe0c793672337fc032e29381f1f"
+  integrity sha512-OL5s4sGWvC6ZwqfzsXfpn2axMyURe7cKX0qlCPHrun3O/x5dOTf7ATIyNuhB9LbK11m3yMFrjIGPx+oRb12Ijw==
+
 react-popper-tooltip@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmjs.org/react-popper-tooltip/-/react-popper-tooltip-3.1.1.tgz"
