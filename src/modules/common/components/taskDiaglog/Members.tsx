@@ -13,13 +13,12 @@ const Members = () => {
       mt={5}
     >
       <Grid item ml={1}>
-        {' '}
         Members
       </Grid>
-      <Grid item container>
+      <Grid item container spacing={1}>
         {[1, 2, 3].map((avatar) => (
           <Grid item>
-            <Avatar />{' '}
+            <Avatar />
           </Grid>
         ))}
         <Grid item>

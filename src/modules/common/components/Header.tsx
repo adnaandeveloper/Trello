@@ -9,6 +9,7 @@ import HeaderInput from './HeaderInput';
 import TrelloLogo from './TrelloLogo';
 import CustomizeAvatar from './CustomizeAvatar';
 import CreateButton from './CreateButton';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
@@ -59,9 +60,14 @@ type Props = {
 
 const Header = ({ main, light, dark }: Props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
-  const createHandler = (content: string | JSX.Element) => {
-    if (content === 'Create') console.log(content);
+  const clichHandler = (content: string | JSX.Element) => {
+    switch (content) {
+      case 'Workspace':
+        navigate('/board/1');
+        break;
+    }
   };
   return (
     <>
@@ -77,7 +83,7 @@ const Header = ({ main, light, dark }: Props) => {
                 {menuListRigt.map((content, index) => (
                   <Grid item key={index}>
                     <Button
-                      onClick={() => createHandler(content.content)}
+                      onClick={() => clichHandler(content.content)}
                       sx={{
                         paddin: '0 12px',
                         height: '32px',

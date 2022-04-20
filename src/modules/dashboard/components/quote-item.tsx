@@ -203,7 +203,7 @@ function QuoteItem(props: Props) {
         <Content>
           <BlockQuote
             onClick={() => {
-              navigate('users/:id');
+              navigate('task/:taskId');
               taskDiaglogOpen();
               setTaskListNameAndTasleTitleName(
                 quote.content,

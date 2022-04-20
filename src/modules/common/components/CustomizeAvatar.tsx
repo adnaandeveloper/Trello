@@ -22,85 +22,37 @@ const emails = ['username@gmail.com', 'user02@gmail.com'];
 
 const dialogList = [
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Add another account' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Add another account',
   },
   {
     content: <Divider variant='middle' />,
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Profile and visibility' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Profile and visibility',
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Activity' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Activity',
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Cards' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Cards',
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Settings' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Settings',
   },
   {
     content: <Divider variant='middle' />,
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Helps' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Helps',
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='Shortcuts' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Shortcuts',
   },
   {
     content: <Divider variant='middle' />,
   },
   {
-    content: (
-      <ListItemButton>
-        <ListItem>
-          <ListItemText primary='log out' />
-        </ListItem>
-      </ListItemButton>
-    ),
+    content: 'Log out',
   },
 ];
 
@@ -261,11 +213,17 @@ function HeaderAvatarDialog(props: Props) {
       </Grid>
       <Box sx={{ m: 1 }}>
         <List sx={{ '& .MuiListItemButton-root': { padding: '0' } }}>
-          {dialogList.map((item, index, array) => (
-            <div onClick={() => onClickHandler(index.toString())}>
-              {item.content}
-            </div>
-          ))}
+          {dialogList.map((item, index) =>
+            index === 1 || index === 6 || index === 9 ? (
+              item.content
+            ) : (
+              <ListItemButton onClick={() => onClickHandler(index.toString())}>
+                <ListItem>
+                  <ListItemText primary={item.content} />
+                </ListItem>
+              </ListItemButton>
+            )
+          )}
         </List>
       </Box>
     </Dialog>

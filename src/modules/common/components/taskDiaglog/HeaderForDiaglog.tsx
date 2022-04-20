@@ -30,6 +30,9 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
     taskeTitleName,
     taskListName,
   } = useContext(AuthContext);
+  const [taskTitle, setTasktitle] = useState(taskeTitleName);
+  const [tskListName, setListName] = useState(taskListName);
+
   const navigate = useNavigate();
   const [textarea, setTextarea] = useState(false);
   const handleTexfField = () => {
@@ -38,23 +41,27 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
       setToggletextFeild(false);
     }
   };
+
+  const handleChange = (taskTitle: string) => {
+    setTasktitle(taskTitle);
+  };
   return (
-    <OnOutsiceClick onOutsideClick={() => setToggletextFeild(false)}>
+    <>
       <ClickAwayListener onClickAway={() => setToggletextFeild(false)}>
         <Grid container justifyContent='space-between'>
           <Grid item>
-            <Grid item container spacing={2}>
+            <Grid item container spacing={1}>
               <Grid item> {icon}</Grid>
 
               {toggletextField ? (
                 <Grid item>
                   <TextField
-                    onChange={(e) => console.log(e.target.value)}
-                    label
+                    onChange={(e) => handleChange(e.target.value)}
+                    label={false}
                     fullWidth
                     size='small'
-                    value={taskeTitleName}
-                    sx={{ width: '680px', height: '29px' }}
+                    value={taskTitle}
+                    sx={{ width: '48rem', height: '29px' }}
                   ></TextField>
                 </Grid>
               ) : (
@@ -78,10 +85,10 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
         </Grid>
       </ClickAwayListener>
 
-      <Grid container justifyContent='flex-start' ml={5} mt={1}>
+      <Grid container justifyContent='flex-start' ml={5}>
         <Grid item> In list {' ' + taskListName}</Grid>
       </Grid>
-    </OnOutsiceClick>
+    </>
   );
 };
 

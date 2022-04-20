@@ -21,40 +21,47 @@ function HeaderCreateDialog(props: Props) {
   const [description, setDescription] = React.useState('');
   const { userId } = useContext(AuthContext);
   const [loading, setLoading] = React.useState(false);
-
   const { onClose, selectedValue, open } = props;
-
+  const [disabledButton, setDisabledButton] = React.useState(false);
+  console.log(disabledButton);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
-    const createdBoardsData = await createBoar(name, description, userId).catch(
-      (error) => {
-        console.log(error.message);
+    if (name !== '' && description !== '') {
+      const createdBoardsData = await createBoar(
+        name,
+        description,
+        userId
+      ).catch((error) => {});
+      if (createdBoardsData) {
+        setLoading(false);
+        onClose(selectedValue);
       }
-    );
-    if (createdBoardsData) {
-      setLoading(false);
-      console.log(' is the board created? i dont know see ');
-      console.log({ createdBoardsData });
-      onClose(selectedValue);
+
+      setDescription('');
+      setName('');
+      setDisabledButton(false);
     }
-
-    console.log(name);
-    console.log(description);
-    setDescription('');
-    setName('');
   };
-
   const handleClose = () => {
     onClose(selectedValue);
+    setDisabledButton(false);
+    setName('');
+    setDescription('');
   };
 
   const handleChangeTitle = (event: any) => {
     setName(event.target.value);
+    if (description !== '') {
+      setDisabledButton(true);
+    }
   };
 
   const handleChangeDescription = (event: any) => {
     setDescription(event.target.value);
+    if (name !== '') {
+      setDisabledButton(true);
+    }
   };
   return (
     <Dialog
@@ -143,11 +150,12 @@ function HeaderCreateDialog(props: Props) {
                   variant='outlined'
                   sx={{ color: 'black' }}
                 >
-                  cencel
+                  cancel
                 </Button>
               </Grid>
               <Grid item>
                 <LoadingButton
+                  disabled={!disabledButton}
                   loading={loading}
                   type='submit'
                   variant='contained'

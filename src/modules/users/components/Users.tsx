@@ -119,8 +119,9 @@ export default function Users() {
               aria-label='lab API tabs example'
               centered
             >
-              <Tab label='Profile' value='1' />
-              <Tab label='Settings' value='2' />
+              {['Profile', 'Settings'].map((T, index) => (
+                <Tab label={T} value={index === 0 ? '1' : '2'} />
+              ))}
             </TabList>
           </Box>
           <TabPanel value='1'>
@@ -146,7 +147,7 @@ export default function Users() {
                           id={item}
                           onChange={formik.handleChange}
                           size='small'
-                          label={item}
+                          label={index === 0 ? 'First Name' : 'Last Name'}
                           value={
                             index === 0
                               ? formik.values.firstName
@@ -175,6 +176,7 @@ export default function Users() {
 
                 <Grid item>
                   <Button
+                    disabled={!(formik.isValid && formik.dirty)}
                     type='submit'
                     variant='contained'
                     sx={{ width: '410px' }}

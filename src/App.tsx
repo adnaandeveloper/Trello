@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Board from './modules/dashboard/components/Board';
 import Boards from './modules/dashboards/components/Boards';
 import Signup from 'modules/signup/components/Signup';
@@ -107,18 +107,13 @@ const App: React.FC = () => {
     setAuthorName('');
   };
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (value: string) => {
-    setOpen(false);
-  };
+  const { pathname } = useLocation();
 
   useEffect(() => {
+    console.log('this is navigate -1 sxb');
+    console.log(navigate(-1));
     const authirise = async () => {
+      console.log(localStorage.getItem('token'));
       if (!localStorage.getItem('token')) {
         navigate('login');
       } else {
@@ -126,10 +121,8 @@ const App: React.FC = () => {
         if (data) {
           console.log({ data });
           saveUserCridentials(data.username, data.id, data.email);
-
-          navigate('boards');
-        } else {
-          navigate('login');
+          console.log(pathname);
+          navigate(pathname);
         }
       }
     };
@@ -161,9 +154,10 @@ const App: React.FC = () => {
             }
           >
             <Route
-              path='users/:id'
+              path='task/:taskId'
               element={
                 <Dialog
+                  onBackdropClick={() => navigate('board/:id')}
                   onClose={taskDiaglogClose}
                   open={taskDiaglogState}
                   maxWidth='md'

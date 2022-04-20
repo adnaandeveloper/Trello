@@ -1,5 +1,11 @@
 import React, { ReactElement, useState } from 'react';
-import { Button, Grid, TextField, TextareaAutosize } from '@mui/material';
+import {
+  Button,
+  Grid,
+  TextField,
+  TextareaAutosize,
+  IconButton,
+} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Members from './Members';
 import NotesIcon from '@mui/icons-material/Notes';
@@ -10,6 +16,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 const Description = () => {
   const [toggletextField, setToggletextFeild] = useState(false);
   const [textarea, setTextarea] = useState(false);
+
   return (
     <ClickAwayListener onClickAway={() => setTextarea(false)}>
       <Grid container mt={5} direction='column' ml={3}>
@@ -44,15 +51,26 @@ const Description = () => {
               <Grid item mt={1}>
                 <Grid item container direction='column'>
                   <Grid item>
-                    <TextareaAutosize minRows={4} style={{ width: 680 }} />
+                    <TextareaAutosize minRows={4} style={{ width: '50rem' }} />
                   </Grid>
                   <Grid item>
-                    <Grid item container justifyContent='flex-end' spacing={2}>
+                    <Grid item container justifyContent='flex-end' spacing={3}>
                       <Grid item>
-                        <Button variant='contained'>Save</Button>
+                        <Button
+                          variant='contained'
+                          onClick={() => setTextarea(false)}
+                        >
+                          Save
+                        </Button>
                       </Grid>
                       <Grid item>
-                        <AddIcon fontSize='large' />
+                        <IconButton>
+                          <AddIcon
+                            fontSize='small'
+                            onClick={() => setTextarea(false)}
+                            sx={{ color: 'black' }}
+                          />
+                        </IconButton>
                       </Grid>
                     </Grid>
                   </Grid>
