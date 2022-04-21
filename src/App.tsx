@@ -59,8 +59,14 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const { loggedIn, saveUserCridentials, taskDiaglogClose, taskDiaglogState } =
-    useContext(AuthContext);
+  const {
+    loggedIn,
+    saveUserCridentials,
+    taskDiaglogClose,
+    taskDiaglogState,
+    taskDiaglogOpen,
+    setTaskListNameAndTasleTitleName,
+  } = useContext(AuthContext);
 
   const [allAuthors] = useState(getAllAuthors());
   const [listIsAddeable, setListIsAddeable] = useState(false);
@@ -108,10 +114,9 @@ const App: React.FC = () => {
   };
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  console.log('pathname is ');
+  console.log(pathname);
   useEffect(() => {
-    console.log('this is navigate -1 sxb');
-    console.log(navigate(-1));
     const authirise = async () => {
       console.log(localStorage.getItem('token'));
       if (!localStorage.getItem('token')) {
@@ -119,10 +124,14 @@ const App: React.FC = () => {
       } else {
         const data = await isLogedIn();
         if (data) {
-          console.log({ data });
           saveUserCridentials(data.username, data.id, data.email);
           console.log(pathname);
           navigate(pathname);
+          taskDiaglogOpen();
+          setTaskListNameAndTasleTitleName(
+            localStorage.getItem('taskName')!,
+            localStorage.getItem('taskList')!
+          );
         }
       }
     };

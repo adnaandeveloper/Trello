@@ -204,11 +204,14 @@ function QuoteItem(props: Props) {
           <BlockQuote
             onClick={() => {
               navigate('task/:taskId');
+
               taskDiaglogOpen();
               setTaskListNameAndTasleTitleName(
                 quote.content,
                 quote.author.name
               );
+              localStorage.setItem('taskName', quote.content);
+              localStorage.setItem('taskList', quote.author.name);
             }}
           >
             {quote.content}
