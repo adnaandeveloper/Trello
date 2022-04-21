@@ -24,7 +24,6 @@ export default function Users() {
   const formik = useFormik<MyValues>({
     initialValues,
     onSubmit: (values, { resetForm }) => {
-      console.log(values);
       resetForm();
     },
   });
@@ -99,8 +98,8 @@ export default function Users() {
             />
           </Grid>
 
-          {[userName, userEmail].map((item) => (
-            <Grid item style={{ textTransform: 'capitalize' }}>
+          {[userName, userEmail].map((item, index) => (
+            <Grid item key={index} style={{ textTransform: 'capitalize' }}>
               {item}
             </Grid>
           ))}
@@ -120,7 +119,7 @@ export default function Users() {
               centered
             >
               {['Profile', 'Settings'].map((T, index) => (
-                <Tab label={T} value={index === 0 ? '1' : '2'} />
+                <Tab label={T} value={index === 0 ? '1' : '2'} key={index} />
               ))}
             </TabList>
           </Box>
@@ -142,7 +141,7 @@ export default function Users() {
                 <Grid item>
                   <Grid item container spacing={2}>
                     {['firstName', 'lastName'].map((item, index) => (
-                      <Grid item>
+                      <Grid item key={index}>
                         <TextField
                           id={item}
                           onChange={formik.handleChange}

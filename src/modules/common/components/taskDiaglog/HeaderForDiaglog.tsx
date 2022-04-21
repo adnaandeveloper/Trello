@@ -1,17 +1,6 @@
 import React, { ReactElement, useContext, useState } from 'react';
-import {
-  Button,
-  Grid,
-  TextField,
-  TextareaAutosize,
-  IconButton,
-} from '@mui/material';
+import { Grid, TextField, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import Members from './Members';
-import NotesIcon from '@mui/icons-material/Notes';
-import Avatar from '@mui/material/Avatar';
-import AddIcon from '@mui/icons-material/Add';
-import OnOutsiceClick from 'react-outclick';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'context/api-context';
@@ -24,24 +13,9 @@ type Props = {
 
 const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
   const [toggletextField, setToggletextFeild] = useState(false);
-  const {
-    taskDiaglogOpen,
-    setTaskListNameAndTasleTitleName,
-    taskeTitleName,
-    taskListName,
-  } = useContext(AuthContext);
+  const { taskeTitleName, taskListName } = useContext(AuthContext);
   const [taskTitle, setTasktitle] = useState(taskeTitleName);
-  const [tskListName, setListName] = useState(taskListName);
-
   const navigate = useNavigate();
-  const [textarea, setTextarea] = useState(false);
-  const handleTexfField = () => {
-    console.log('hello');
-    if (toggletextField) {
-      setToggletextFeild(false);
-    }
-  };
-
   const handleChange = (taskTitle: string) => {
     setTasktitle(taskTitle);
   };

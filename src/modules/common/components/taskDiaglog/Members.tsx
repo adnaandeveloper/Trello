@@ -16,8 +16,8 @@ const Members = () => {
         Members
       </Grid>
       <Grid item container spacing={1}>
-        {[1, 2, 3].map((avatar) => (
-          <Grid item>
+        {[1, 2, 3].map((avatar, index) => (
+          <Grid item key={index}>
             <Avatar />
           </Grid>
         ))}

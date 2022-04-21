@@ -9,10 +9,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './index.css';
 import { getAllAuthors, addAuthor, quotes, addOneQuote } from './assets/data';
 import { Author, Quote, QuoteMap } from 'assets/types';
-
 import { AuthContext } from 'context/api-context';
 import { isLogedIn } from 'context/api-helper';
-import { TeskDialog } from 'modules/common/components/taskDiaglog/TeskDialog';
 import { Dialog } from '@mui/material';
 import DialogWrapper from 'modules/common/components/taskDiaglog/DialogWrapper';
 
@@ -60,7 +58,6 @@ const theme = createTheme({
 
 const App: React.FC = () => {
   const {
-    loggedIn,
     saveUserCridentials,
     taskDiaglogClose,
     taskDiaglogState,
@@ -114,18 +111,16 @@ const App: React.FC = () => {
   };
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  console.log('pathname is ');
-  console.log(pathname);
+
   useEffect(() => {
     const authirise = async () => {
-      console.log(localStorage.getItem('token'));
       if (!localStorage.getItem('token')) {
         navigate('login');
       } else {
         const data = await isLogedIn();
         if (data) {
           saveUserCridentials(data.username, data.id, data.email);
-          console.log(pathname);
+
           navigate(pathname);
           taskDiaglogOpen();
           setTaskListNameAndTasleTitleName(

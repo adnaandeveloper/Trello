@@ -1,18 +1,11 @@
-import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import PersonIcon from '@mui/icons-material/Person';
-import AddIcon from '@mui/icons-material/Add';
-import Typography from '@mui/material/Typography';
-import { blue } from '@mui/material/colors';
 import React, { useContext, useEffect, useState } from 'react';
 import { Avatar, Box, Grid } from '@mui/material';
 import { AuthContext } from 'context/api-context';
-import { SocialDistanceOutlined } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -75,10 +68,6 @@ function HeaderAvatarDialog(props: Props) {
 
   const handleClose = () => {
     onClose(selectedValue);
-  };
-
-  const handleListItemClick = (value: string) => {
-    onClose(value);
   };
 
   function stringToColor(value: string | null) {
@@ -215,9 +204,12 @@ function HeaderAvatarDialog(props: Props) {
         <List sx={{ '& .MuiListItemButton-root': { padding: '0' } }}>
           {dialogList.map((item, index) =>
             index === 1 || index === 6 || index === 9 ? (
-              item.content
+              <div key={index}>{item.content}</div>
             ) : (
-              <ListItemButton onClick={() => onClickHandler(index.toString())}>
+              <ListItemButton
+                key={index}
+                onClick={() => onClickHandler(index.toString())}
+              >
                 <ListItem>
                   <ListItemText primary={item.content} />
                 </ListItem>

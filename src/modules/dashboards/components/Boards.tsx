@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Header from './../../common/components/Header';
 import {
   Container,
@@ -75,11 +75,7 @@ const Boards = () => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('sm'));
   const title = 'My boards';
-  const underTitleText =
-    'Get going faster with a template from the Trello community or';
   const { data, error, isError, isLoading } = useQuery('data', getBoards);
-
-  console.log({ data, userId });
 
   const myBoards =
     data?.filter((item: { owners: string }) => item.owners.includes(userId)) ||

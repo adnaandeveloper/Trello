@@ -1,8 +1,7 @@
 import { Grid, TextField } from '@mui/material';
 import AddTaskListFieldButton from './AddTaskListFieldButton';
 import CloseIcon from '@mui/icons-material/Close';
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React, { KeyboardEvent } from 'react';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 type Props = {
@@ -12,6 +11,13 @@ type Props = {
   authorName?: string;
 };
 const AddTaskListField = (props: Props) => {
+  const OnkeyPressHandler = (e: KeyboardEvent<HTMLImageElement>) => {
+    if (e.key === 'Enter') {
+      props.onClickHandler();
+      props.AddNewAotuhersToTheAuthors();
+    }
+  };
+
   return (
     <ClickAwayListener onClickAway={() => props.onClickHandler()}>
       <Grid container sx={{ marginTop: '5.5rem', height: 60 }}>
@@ -20,6 +26,7 @@ const AddTaskListField = (props: Props) => {
           sx={{ backgroundColor: '#ebecf0', padding: '1px', marginTop: '5' }}
         >
           <TextField
+            onKeyPress={OnkeyPressHandler}
             value={props.authorName}
             onChange={(e) => props.onChangHanlerAddAuthor(e.target.value)}
             size='small'
@@ -46,7 +53,9 @@ const AddTaskListField = (props: Props) => {
             </Grid>
             <Grid item>
               <CloseIcon
-                onClick={() => props.onClickHandler()}
+                onClick={() => {
+                  props.onClickHandler();
+                }}
                 sx={{
                   fontSize: '25px',
                   marginTop: '10px',

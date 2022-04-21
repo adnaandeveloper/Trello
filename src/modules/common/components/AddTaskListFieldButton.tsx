@@ -8,7 +8,9 @@ type Props = {
 const AddTaskListFieldButton = (props: Props) => {
   return (
     <Button
-      onClick={() => props.AddNewAotuhersToTheAuthors()}
+      onClick={() => {
+        props.AddNewAotuhersToTheAuthors();
+      }}
       sx={{
         m: 1,
         height: '32px',

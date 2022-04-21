@@ -3,6 +3,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import AddCardButton from './AddCardButton';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { useEffect, useRef } from 'react';
 
 type Props = {
   togleShowTextField: () => void;
@@ -12,9 +13,24 @@ type Props = {
   addQuoteName: (name: string) => void;
 };
 const AddCardTextFeild = (props: Props) => {
+  const el = useRef<null | HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    el.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+  const OnkeyPressHandler = (e: React.KeyboardEvent<HTMLImageElement>) => {
+    if (e.key === 'Enter') {
+      props.sendTheTitle();
+      props.togleShowTextField();
+    }
+  };
+  useEffect(() => {
+    scrollToBottom();
+    console.log(' helloooo brother ! ');
+  });
   return (
     <ClickAwayListener onClickAway={() => props.togleShowTextField()}>
-      <Grid container sx={{}}>
+      <Grid ref={el} container sx={{}}>
         <Grid
           item
           sx={{
@@ -26,6 +42,7 @@ const AddCardTextFeild = (props: Props) => {
           }}
         >
           <TextField
+            onKeyPress={OnkeyPressHandler}
             id='outlined-basic'
             variant='outlined'
             fullWidth

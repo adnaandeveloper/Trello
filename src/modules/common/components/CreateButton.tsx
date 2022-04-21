@@ -23,7 +23,7 @@ function HeaderCreateDialog(props: Props) {
   const [loading, setLoading] = React.useState(false);
   const { onClose, selectedValue, open } = props;
   const [disabledButton, setDisabledButton] = React.useState(false);
-  console.log(disabledButton);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -173,7 +173,7 @@ function HeaderCreateDialog(props: Props) {
 }
 
 const CreateButton = () => {
-  const [logedInUser, setLogedInUser] = useState<string | null>('');
+  const [logedInUser] = useState<string | null>('');
 
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);

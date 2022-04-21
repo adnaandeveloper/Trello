@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   Grid,
@@ -11,7 +11,7 @@ import {
   Box,
   Snackbar,
 } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import { makeStyles } from '@mui/styles';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -112,11 +112,10 @@ const Login = () => {
     const sendtData = await login(email, password).catch((error) => {
       setMassage(error.message);
       setOpen(true);
-      console.log(error.message);
+
       setLoading(false);
     });
     if (sendtData.jwt) {
-      console.log(sendtData.user.id);
       setOpen(false);
       logIn(sendtData.jwt, sendtData.user.firstName, sendtData.user.id);
       setLoading(false);

@@ -19,7 +19,6 @@ import lefPic from './../../../assets/left.svg';
 import { Box, Theme } from '@mui/system';
 import { login, signUp } from 'context/api-helper';
 import { useNavigate } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 
@@ -137,23 +136,22 @@ const Signup = () => {
       email: data.get('mailText'),
       password: data.get('password'),
     });
-    console.log({ data });
 
     const sendtData = await signUp(data.get('mailText'), password).catch(
       (error) => {
         setMassage(error.message);
         setOpen(true);
-        console.log(error.message);
+
         setLoading(false);
       }
     );
-    console.log({ sendtData });
+
     if (sendtData.jwt) {
       setOpen(false);
       login(sendtData.jwt, sendtData.user.username);
       setLoading(false);
       localStorage.setItem('token', sendtData.jwt);
-      console.log(sendtData.user.username);
+
       // localStorage.setItem('userName', sendtData.user.username);
       navigate('/boards');
     } else {

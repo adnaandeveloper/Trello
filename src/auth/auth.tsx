@@ -3,7 +3,7 @@ import { login } from 'context/api-helper';
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 // eslint-disable-next-line react-hooks/rules-of-hooks
-const { loggedIn, userName, logIn, logOut, token } = useContext(AuthContext);
+const { logIn } = useContext(AuthContext);
 // eslint-disable-next-line react-hooks/rules-of-hooks
 const navigate = useNavigate();
 export const authLogin = async (email: string, password: string) => {

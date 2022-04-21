@@ -52,7 +52,10 @@ const Board = (props: Props) => {
   /* eslint-disable react/sort-comp */
   const [myColumns, setColumns] = useState(props.initial);
   const [orderedState, SetOrdered] = useState(Object.keys(props.initial));
+
   useEffect(() => {
+    console.log('okey what about me ');
+
     setColumns(props.initial);
     SetOrdered(Object.keys(props.initial));
   }, [props]);

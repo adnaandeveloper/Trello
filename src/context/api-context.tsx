@@ -1,4 +1,4 @@
-import React, { useState, FC, useRef, useEffect } from 'react';
+import React, { useState, FC } from 'react';
 
 export interface IAuth {
   loggedIn: boolean;

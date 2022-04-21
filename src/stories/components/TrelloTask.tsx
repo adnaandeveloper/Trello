@@ -100,8 +100,8 @@ export const TrelloTask = ({ taske: string }: Todo) => {
                 <Grid item>
                   <h1> Done </h1>
 
-                  {todosComp.map((item) => (
-                    <Item taske={item.taske} />
+                  {todosComp.map((item, index) => (
+                    <Item taske={item.taske} key={index} />
                   ))}
                 </Grid>
                 {provided.placeholder}
