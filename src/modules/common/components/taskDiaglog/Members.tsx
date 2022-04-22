@@ -17,7 +17,6 @@ const Members = () => {
         ml={1}
         sx={{
           color: '#5e6c84',
-
           fontSize: '12px',
           fontWeight: '800',
         }}
@@ -27,12 +26,14 @@ const Members = () => {
       <Grid item container spacing={1}>
         {[1, 2, 3].map((avatar, index) => (
           <Grid item key={index}>
-            <Avatar />
+            <Avatar sx={{ width: '32px', height: '32px' }} />
           </Grid>
         ))}
         <Grid item>
-          <IconButton>
-            <AddIcon sx={{ color: 'black' }} />
+          <IconButton
+            sx={{ backgroundColor: '#091e420a', borderRadius: '100%' }}
+          >
+            <AddIcon sx={{ color: 'black', width: '16px', height: '16px' }} />
           </IconButton>
         </Grid>
       </Grid>
