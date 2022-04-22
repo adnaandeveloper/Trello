@@ -1,20 +1,12 @@
 import React, { ReactElement, useState } from 'react';
-import {
-  Button,
-  Grid,
-  TextField,
-  TextareaAutosize,
-  IconButton,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import Members from './Members';
+import { Button, Grid, TextareaAutosize, IconButton } from '@mui/material';
+
 import NotesIcon from '@mui/icons-material/Notes';
-import Avatar from '@mui/material/Avatar';
+
 import AddIcon from '@mui/icons-material/Add';
-import OnOutsiceClick from 'react-outclick';
+
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 const Description = () => {
-  const [toggletextField, setToggletextFeild] = useState(false);
   const [textarea, setTextarea] = useState(false);
 
   return (
@@ -25,7 +17,16 @@ const Description = () => {
             <Grid item>
               <NotesIcon />
             </Grid>
-            <Grid item>Description</Grid>
+            <Grid
+              item
+              sx={{
+                color: '#172b4d',
+                fontSize: ' 17px',
+                fontWeight: '700',
+              }}
+            >
+              Description
+            </Grid>
             {!textarea && (
               <Grid item>
                 <Button

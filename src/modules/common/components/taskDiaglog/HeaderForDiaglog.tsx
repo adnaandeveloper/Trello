@@ -39,7 +39,15 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
                   ></TextField>
                 </Grid>
               ) : (
-                <Grid item onClick={() => setToggletextFeild(true)}>
+                <Grid
+                  item
+                  sx={{
+                    fontSize: '20px',
+                    fontWeight: '600',
+                    color: '172b4d',
+                  }}
+                  onClick={() => setToggletextFeild(true)}
+                >
                   {taskeTitleName}
                 </Grid>
               )}
@@ -60,7 +68,17 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
       </ClickAwayListener>
 
       <Grid container justifyContent='flex-start' ml={5}>
-        <Grid item> In list {' ' + taskListName}</Grid>
+        <Grid
+          item
+          sx={{
+            color: '#5e6c84',
+            fontSize: '14px',
+            fontWeight: '500',
+          }}
+        >
+          {' '}
+          In list {' ' + taskListName}
+        </Grid>
       </Grid>
     </>
   );

@@ -1,6 +1,5 @@
 import { Grid, TextField } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
 import AddCardButton from './AddCardButton';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useEffect, useRef } from 'react';
@@ -38,6 +37,7 @@ const AddCardTextFeild = (props: Props) => {
             padding: '1px',
             height: '114px',
             marginLeft: '-8px',
+
             width: '250px',
           }}
         >

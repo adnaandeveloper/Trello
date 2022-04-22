@@ -12,7 +12,16 @@ const Members = () => {
       direction='column'
       mt={5}
     >
-      <Grid item ml={1}>
+      <Grid
+        item
+        ml={1}
+        sx={{
+          color: '#5e6c84',
+
+          fontSize: '12px',
+          fontWeight: '800',
+        }}
+      >
         Members
       </Grid>
       <Grid item container spacing={1}>

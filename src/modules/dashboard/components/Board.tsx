@@ -9,10 +9,8 @@ import {
   Droppable,
   DragDropContext,
 } from 'react-beautiful-dnd';
-
 import Header from './../../common/components/Header';
 import { useTheme } from '@mui/material/';
-
 import { QuoteMap, Quote } from 'modules/common/components/types';
 import Column from './column';
 import reorder, { reorderQuoteMap } from 'modules/common/components/reorder';
@@ -54,8 +52,6 @@ const Board = (props: Props) => {
   const [orderedState, SetOrdered] = useState(Object.keys(props.initial));
 
   useEffect(() => {
-    console.log('okey what about me ');
-
     setColumns(props.initial);
     SetOrdered(Object.keys(props.initial));
   }, [props]);
@@ -120,8 +116,7 @@ const Board = (props: Props) => {
 
   const columns: QuoteMap = myColumns;
   const ordered: string[] = orderedState;
-  const { containerHeight, useClone, isCombineEnabled, withScrollableColumns } =
-    props;
+  const { containerHeight, useClone, isCombineEnabled } = props;
 
   const board = (
     <Droppable
@@ -139,7 +134,6 @@ const Board = (props: Props) => {
               index={index}
               title={key}
               quotes={columns[key]}
-              isScrollable={withScrollableColumns}
               isCombineEnabled={isCombineEnabled}
               useClone={useClone}
               addQuote={props.addQuote}
