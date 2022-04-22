@@ -4,6 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'context/api-context';
+import Link from '@mui/material/Link';
 type Props = {
   tasktName: string;
   listName: string;
@@ -76,8 +77,10 @@ const HeaderForDiaglog = ({ tasktName, listName, icon, onClose }: Props) => {
             fontWeight: '500',
           }}
         >
-          {' '}
-          In list {' ' + taskListName}
+          In list{' '}
+          <Link href='#' color='inherit'>
+            {' ' + taskListName}
+          </Link>
         </Grid>
       </Grid>
     </>
